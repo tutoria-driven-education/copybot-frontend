@@ -50,6 +50,10 @@ export const GlobalStyles = createGlobalStyle`
     border-spacing: 0;
   }
 
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     color: #FFF;
     background-color: #0E0E13;

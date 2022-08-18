@@ -1,60 +1,63 @@
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  Children,
+  cloneElement,
+} from "react";
 import styled from "styled-components";
-import Page from "./Page";
+import parse from "html-react-parser";
 
 const Home = () => {
-  const [page, setPage] = useState();
-  const [table, setTable] = useState([]);
+  const [mossURL, setMossURL] = useState([]);
+  const [tableMoss, setTableMoss] = useState("");
 
-  const div = useRef();
+  const mossLayoutRef = useRef();
 
-  const stylePage = () => {
-    let childrens = div.current.childNodes;
+  const getMossURL = useCallback(async () => {
+    try {
+      let promise = await axios.get("http://localhost:5000/pagina");
 
-    let td = document.getElementsByTagName("td");
+      setMossURL(promise.data);
 
-    setTable(td);
-  };
+      // Apenas medidas provisórias
+      let getTableTagName = document.getElementsByTagName("table");
 
-  function createMarkup() {
-    return { __html: page };
-  }
+      let table = "";
+
+      for (const td of getTableTagName) {
+        table += td.outerHTML;
+      }
+
+      setTableMoss(table);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [mossURL]);
 
   useEffect(() => {
-    let promise = axios.get("http://localhost:5000/pagina");
-
-    setPage(promise.data);
-  }, []);
+    getMossURL();
+  }, [getMossURL]);
 
   return (
     <>
-      <h1>Home</h1>
+      <HiddenElement>
+        <div
+          dangerouslySetInnerHTML={{ __html: mossURL }}
+          ref={mossLayoutRef}
+        ></div>
+      </HiddenElement>
 
-      <button onClick={stylePage}>Style page</button>
-
-      <div dangerouslySetInnerHTML={createMarkup()}></div>
-
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {table.map((element) => {
-            <tr>{element}</tr>;
-          })}
-        </tbody>
-      </table>
+      {/* <TableStyle>{parse(tableMoss)}</TableStyle> */}
     </>
   );
 };
 
 export default Home;
 
-const Element = styled.div`
-  a {
-    color: red;
-  }
+const HiddenElement = styled.div`
+  display: none;
 `;
+
