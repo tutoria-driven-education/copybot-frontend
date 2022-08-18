@@ -17,22 +17,23 @@ const Home = () => {
     setTable(td);
   };
 
-  const myFunction = async () => {
-    let promise = await axios.get("http://localhost:5000/pagina");
-
-    setPage(promise.data);
-  };
-
   function createMarkup() {
     return { __html: page };
   }
 
+  useEffect(() => {
+    let promise = axios.get("http://localhost:5000/pagina");
+
+    setPage(promise.data);
+  }, []);
+
   return (
     <>
       <h1>Home</h1>
-      <button onClick={myFunction}>Get</button>
 
       <button onClick={stylePage}>Style page</button>
+
+      <div dangerouslySetInnerHTML={createMarkup()}></div>
 
       <table>
         <thead>
@@ -41,8 +42,8 @@ const Home = () => {
           </tr>
         </thead>
         <tbody>
-          {table.map(() => {
-            
+          {table.map((element) => {
+            <tr>{element}</tr>;
           })}
         </tbody>
       </table>
