@@ -34,11 +34,20 @@ const NavbarStyle = styled.nav`
   padding: 0 24px;
   align-items: center;
   background-color: #45455c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const BackButton = styled.div`
+  position: absolute;
+  top: 23px;
+  left: 30px;
+  width: 30px;
+  height: 25px;
 `;
 
 const IconBack = styled(IoArrowBackCircleSharp)`
   cursor: pointer;
   font-size: 2rem;
 `;
-
-const BackButton = styled.div``;
