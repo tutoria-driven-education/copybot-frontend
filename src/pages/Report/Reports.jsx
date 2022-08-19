@@ -1,126 +1,120 @@
 import axios from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import parse from "html-react-parser";
+import { ThreeCircles } from "react-loader-spinner";
 
 const Reports = () => {
-  const [mossGeneratedPage, setMossGeneratedPage] = useState();
-  const [mossReport, setMossReport] = useState("");
-  const [modalShow, setModalShow] = useState(false);
-
-  const getTable2 = useRef();
-
-  const handleModalDisplay = () => {
-    if (modalShow) {
-      setModalShow(!modalShow);
-      return;
-    }
-    // Medida provisória
-    //let getTable = await getTable2.current.children[11];
-    let getTable = document.getElementsByTagName("table");
-
-    let table = "";
-
-    for (const td of getTable) {
-      table += td.outerHTML;
-      console.log("as");
-    }
-
-    setMossReport(table);
-    setModalShow(!modalShow);
-  };
+  const [table, setTable] = useState();
+  const [columns, setColumns] = useState();
 
   const getMossGeneratedPage = useCallback(async () => {
     try {
       let promise = await axios.get("http://localhost:5000/pagina");
 
-      setMossGeneratedPage(promise.data);
+      setTable(promise.data.table);
+      setColumns(promise.data.columns);
     } catch (error) {
       console.log(error);
     }
-  }, [mossReport]);
+  }, []);
 
   useEffect(() => {
     getMossGeneratedPage();
-  }, []);
+  }, [getMossGeneratedPage]);
 
   return (
     <>
       <Container>
-        <HiddenElement>
-          <div
-            dangerouslySetInnerHTML={{ __html: mossGeneratedPage }}
-            ref={getTable2}
-          ></div>
-        </HiddenElement>
+        <TableStyle>
+          <div dangerouslySetInnerHTML={{ __html: table }}></div>
+        </TableStyle>
+
+        <Flex>
+          {columns ? (
+            columns.map((column, index) => (
+              <Column key={index}>
+                <Code dangerouslySetInnerHTML={{ __html: column }}></Code>
+              </Column>
+            ))
+          ) : (
+            <ModalLoader>
+              <ThreeCircles
+                height="100"
+                width="100"
+                color="#FF4791"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                ariaLabel="three-circles-rotating"
+                outerCircleColor=""
+                innerCircleColor=""
+                middleCircleColor=""
+              />
+            </ModalLoader>
+          )}
+        </Flex>
       </Container>
-
-      <button onClick={handleModalDisplay}>Abrir relatório</button>
-
-      <Modal show={modalShow}>
-        <ModalContent>
-          <ModalDialog>
-            <TableStyles>{parse(mossReport)}</TableStyles>
-          </ModalDialog>
-        </ModalContent>
-      </Modal>
     </>
   );
 };
 
 export default Reports;
 
-const Modal = styled.div`
-  background-color: #0000007a;
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  overflow-y: scroll;
-  left: 0;
-  display: ${(props) => (props.show ? "block" : "none")};
-`;
-
-const ModalContent = styled.div`
-  width: 800px;
+const Flex = styled.div`
   display: flex;
-  margin: 32px auto;
-  align-items: flex-start;
-  height: calc(100% - 32px * 2);
 `;
 
-const ModalDialog = styled.div`
-  width: 100%;
+const Code = styled.div`
+  color: #fff;
   padding: 12px;
+  line-height: 1.4rem;
   border-radius: 12px;
+  border: 2px #ccc solid;
+`;
+
+const Column = styled.div`
+  width: 50%;
+  padding: 18px;
+  overflow-y: hidden;
+  overflow-x: scroll;
 `;
 
 export const Container = styled.div`
-  padding: 0 24px;
-  display: flex;
-  justify-content: center;
+  padding: 24px 0;
+
+  hr {
+    display: none;
+  }
 `;
 
-const TableStyles = styled.div`
+const TableStyle = styled.div`
   table {
-    color: #000;
+    color: #fff;
     border-radius: 12px;
-    background-color: #ccc;
+    background-color: #444;
 
-    tbody {
+    th,
+    td {
+      padding: 6px 12px;
+
       a {
-        color: #000;
+        color: #fff;
+        cursor: default;
         text-decoration: none;
-      }
-
-      th,
-      td {
-        padding: 12px;
       }
     }
   }
 `;
 
-const HiddenElement = styled.div`
-  display: none;
+const ModalLoader = styled.div`
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0000007f;
 `;

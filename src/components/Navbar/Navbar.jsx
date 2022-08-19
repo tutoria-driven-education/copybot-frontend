@@ -1,11 +1,22 @@
 import styled from "styled-components";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   return (
     <NavbarStyle>
       <BackButton>
-        <IoArrowBackCircleSharp size={30} />
+        {pathname === "/" ? (
+          <Brand
+            src="https://hub.driven.com.br/algorithms/4de17e59e871b2af7c42.svg"
+            alt=""
+          />
+        ) : (
+          <IconBack onClick={() => navigate(-1, { replace: true })} />
+        )}
       </BackButton>
     </NavbarStyle>
   );
@@ -13,9 +24,21 @@ const Navbar = () => {
 
 export default Navbar;
 
+const Brand = styled.img`
+  width: 150px;
+`;
+
 const NavbarStyle = styled.nav`
-  padding: 24px;
+  height: 85px;
+  display: flex;
+  padding: 0 24px;
+  align-items: center;
   background-color: #45455c;
+`;
+
+const IconBack = styled(IoArrowBackCircleSharp)`
+  cursor: pointer;
+  font-size: 2rem;
 `;
 
 const BackButton = styled.div``;
