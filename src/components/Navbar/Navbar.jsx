@@ -8,27 +8,43 @@ const Navbar = () => {
 
   return (
     <NavbarStyle>
-      <BackButton>
-        {pathname === "/" ? (
-          <Brand
-            src="https://hub.driven.com.br/algorithms/4de17e59e871b2af7c42.svg"
-            alt=""
-          />
-        ) : (
-          <IconBack onClick={() => navigate(-1, { replace: true })} />
-        )}
-      </BackButton>
+      {pathname === "/" ? (
+        <Brand
+          src="https://hub.driven.com.br/algorithms/4de17e59e871b2af7c42.svg"
+          alt=""
+        />
+      ) : (
+        <>
+          <BackButton>
+            <IconBack onClick={() => navigate(-1, { replace: true })} />
+          </BackButton>
+          <Flex>
+            <Brand
+              src="https://hub.driven.com.br/algorithms/4de17e59e871b2af7c42.svg"
+              alt=""
+            />
+          </Flex>
+        </>
+      )}
     </NavbarStyle>
   );
 };
 
 export default Navbar;
 
+const Flex = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
 const Brand = styled.img`
   width: 150px;
 `;
 
 const NavbarStyle = styled.nav`
+  width: 100%;
+  position: fixed;
   height: 85px;
   display: flex;
   padding: 0 24px;
@@ -40,7 +56,7 @@ const NavbarStyle = styled.nav`
 `;
 
 const BackButton = styled.div`
-  position: absolute;
+  position: fixed;
   top: 23px;
   left: 30px;
   width: 30px;

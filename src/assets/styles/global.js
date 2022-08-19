@@ -56,7 +56,12 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     color: #FFF;
+    overflow: scroll;
     background-color: #0E0E13;
     font-family: 'Lexend Deca', sans-serif;
+
+    @media screen and (min-width: 992px) {
+      overflow: hidden;
+    }
   }
 `;
