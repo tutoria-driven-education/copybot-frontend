@@ -1,91 +1,82 @@
-import { useState } from "react";
-import styled from "styled-components";
-import { GoCloudUpload, GoOctoface } from "react-icons/go";
+import React, { useCallback, useContext, useState } from "react";
+import { postRepositoryUrl } from "../../services/api";
+import { useNavigate } from "react-router-dom";
+import { ReportContext } from "../../hooks/Context/ReportsContext";
+
+import {
+  Form,
+  FormGroup,
+  FormLabel,
+  UploadIcon,
+  Input,
+  Select,
+  OctoFace,
+  Button,
+} from "../styles/Form";
+
+import { projectData } from "./ProjectsData";
 
 const Home = () => {
-  const [inputValue, setInputValue] = useState();
+  const [formValues, setFormValues] = useState({ project: "", url: "" });
+  const { setReports } = useContext(ReportContext);
+
+  let navigate = useNavigate();
+
+  const handleChangeFormValues = useCallback(
+    (e) => {
+      setFormValues({
+        ...formValues,
+        [e.target.name]: e.target.value,
+      });
+    },
+    [formValues]
+  );
+
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      try {
+        const response = await postRepositoryUrl(formValues);
+
+        setReports(response.data);
+        localStorage.setItem("teste",JSON.stringify(response.data));
+
+        navigate("/reports");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [formValues]
+  );
 
   return (
     <>
-      <Container>
-        <Form>
-          <Label htmlFor="url">
-            Insira a URL do Github <GithubIcon />
-          </Label>
+      <Form onSubmit={handleSubmit}>
+        <FormGroup>
+          <FormLabel>
+            Insira a URL do repositório <OctoFace />
+          </FormLabel>
           <Input
-            id="url"
-            value={inputValue}
-            onChange={() => setInputValue(setInputValue)}
+            name="url"
+            onChange={handleChangeFormValues}
+            value={formValues.url}
           />
           <UploadIcon />
-          <Button type="submit">Enviar</Button>
-        </Form>
-      </Container>
+        </FormGroup>
+        <FormGroup>
+          <FormLabel>Selecione o nome do projeto</FormLabel>
+          <Select name="project" onChange={handleChangeFormValues}>
+            {projectData.map((project, index) => (
+              <option value={project.name} key={index}>
+                {project.selectName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+        <Button type="submit">Enviar</Button>
+      </Form>
     </>
   );
 };
 
 export default Home;
-
-const Container = styled.div`
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const Form = styled.form`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  position: relative;
-`;
-
-const Label = styled.label`
-  color: #f5f5f5;
-  font-size: 1.2rem;
-  margin: 0 0 12px 0;
-  display: flex;
-  align-items: center;
-`;
-
-const Input = styled.input`
-  height: 40px;
-  border: none;
-  width: 400px;
-  padding: 0 8px;
-  font-size: 1.2rem;
-  margin: 0 0 12px 0;
-  border-radius: 8px;
-  background-color: #a19f9f;
-`;
-
-const UploadIcon = styled(GoCloudUpload)`
-  top: 44px;
-  right: 12px;
-  color: #000;
-  font-size: 1.6rem;
-  position: absolute;
-`;
-
-const GithubIcon = styled(GoOctoface)`
-  font-size: 1.6rem;
-  margin: 0 0 0 6px;
-`;
-
-const Button = styled.button`
-  height: 40px;
-  width: 250px;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-  border-radius: 12px;
-  transition: 0.2s;
-  color: #f5f5f5;
-  background-color: #ff4791;
-
-  &:hover {
-    background-color: #c44276;
-  }
-`;

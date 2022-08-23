@@ -1,36 +1,34 @@
+import { useContext } from "react";
 import styled from "styled-components";
-import { IoArrowBackCircleSharp } from "react-icons/io5";
-import { useNavigate, useLocation } from "react-router-dom";
+import { GoThreeBars } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
+import { SidebarContext } from "../../hooks/Context/SidebarContext";
 
 const Navbar = () => {
+  const { isOpen, setIsOpen } = useContext(SidebarContext);
+
   const navigate = useNavigate();
-  const { pathname } = useLocation();
 
   return (
     <NavbarStyle>
-      {pathname === "/" ? (
+      <IconsBars size={36} onClick={() => setIsOpen(!isOpen)} />
+      <Flex>
         <Brand
           src="https://hub.driven.com.br/algorithms/4de17e59e871b2af7c42.svg"
           alt=""
         />
-      ) : (
-        <>
-          <BackButton>
-            <IconBack onClick={() => navigate(-1, { replace: true })} />
-          </BackButton>
-          <Flex>
-            <Brand
-              src="https://hub.driven.com.br/algorithms/4de17e59e871b2af7c42.svg"
-              alt=""
-            />
-          </Flex>
-        </>
-      )}
+      </Flex>
     </NavbarStyle>
   );
 };
 
 export default Navbar;
+
+const IconsBars = styled(GoThreeBars)`
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.6rem;
+`;
 
 const Flex = styled.div`
   width: 100%;
@@ -53,17 +51,4 @@ const NavbarStyle = styled.nav`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const BackButton = styled.div`
-  position: fixed;
-  top: 23px;
-  left: 30px;
-  width: 30px;
-  height: 25px;
-`;
-
-const IconBack = styled(IoArrowBackCircleSharp)`
-  cursor: pointer;
-  font-size: 2rem;
 `;

@@ -1,53 +1,41 @@
-import axios from "axios";
-import { useCallback, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { ThreeCircles } from "react-loader-spinner";
-import Column from "./Column";
+import styled from "styled-components";
+import { ReportContext } from "../../hooks/Context/ReportsContext";
+import { ModalLoader } from "../Styles/Modal";
+
+import Report from "./Report";
+import SidebarComponent from "./SidebarComponent";
 
 const Reports = () => {
-  const [table, setTable] = useState();
-  const [columns, setColumns] = useState();
-
-  const teste = useRef();
+  const [allReports, setAllReports] = useState([]);
 
   const getMossGeneratedPage = useCallback(async () => {
     try {
-      let promise = await axios.get("http://localhost:5000/pagina");
+      const storage = JSON.parse(localStorage.getItem("teste"));
 
-      setTable(promise.data.table);
-      setColumns(promise.data.columns);
+      setAllReports(storage);
     } catch (error) {
       console.log(error);
     }
   }, []);
+
   useEffect(() => {
     getMossGeneratedPage();
   }, [getMossGeneratedPage]);
 
   return (
     <>
+      <SidebarComponent allReports={allReports} />
       <Container>
-        <TableStyle>
-          <div
-            ref={teste}
-            dangerouslySetInnerHTML={{
-              __html: table,
-            }}
-          ></div>
-        </TableStyle>
-
-        <Flex>
-          {columns ? (
-            columns.map((column, index) => {
-              let newColumn = column
-                .replace(/&gt;&gt;&gt;&gt;/g, "<br/><br/><div class='title'>")
-                .replace(/file/g, "Arquivo")
-                .split(".js")
-                .join(".js</div>");
-
-              return <Column key={index} newColumn={newColumn} />;
-            })
-          ) : (
+        {allReports ? (
+          allReports.map((reports, index) => (
+            <div key={index}>
+              <Report index={index} {...reports} />
+            </div>
+          ))
+        ) : (
+          <>
             <ModalLoader>
               <ThreeCircles
                 height="100"
@@ -62,8 +50,8 @@ const Reports = () => {
                 middleCircleColor=""
               />
             </ModalLoader>
-          )}
-        </Flex>
+          </>
+        )}
       </Container>
     </>
   );
@@ -71,70 +59,10 @@ const Reports = () => {
 
 export default Reports;
 
-const Flex = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
 export const Container = styled.div`
   padding: 24px 0;
-
-  h1 {
-    color: red;
-  }
 
   hr {
     display: none;
   }
-`;
-
-const TableStyle = styled.div`
-  margin-top: 74px;
-
-  table {
-    color: #fff;
-    border-radius: 12px;
-    background-color: #444;
-
-    tr {
-      padding: 24px;
-      display: none;
-      flex-wrap: wrap;
-      justify-content: center;
-
-      &:first-child {
-        display: flex;
-      }
-
-      th {
-        &:last-child {
-          display: none;
-        }
-      }
-    }
-
-    th,
-    td {
-      padding: 6px 12px;
-
-      a {
-        color: #fff;
-        cursor: default;
-        text-decoration: none;
-      }
-    }
-  }
-`;
-
-const ModalLoader = styled.div`
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #0000007f;
 `;

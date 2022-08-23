@@ -61,7 +61,7 @@ export const GlobalStyles = createGlobalStyle`
     font-family: 'Lexend Deca', sans-serif;
 
     @media screen and (min-width: 992px) {
-      overflow: hidden;
+      overflow-x: hidden;
     }
   }
 `;
