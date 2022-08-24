@@ -1,80 +1,105 @@
-import React, { useCallback, useContext, useState } from "react";
-import { postRepositoryUrl } from "../../services/api";
+import { useCallback, useContext, useState } from "react";
+import { GoTriangleDown } from "react-icons/go";
+import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
-import { ReportContext } from "../../hooks/Context/ReportsContext";
-
+import { ReportsContext } from "../../hooks/context/ReportsContext";
+import { sendRepository } from "../../services/api";
 import {
+  Container,
   Form,
-  FormGroup,
-  FormLabel,
-  UploadIcon,
+  Group,
+  Label,
   Input,
   Select,
+  Submit,
   OctoFace,
-  Button,
-} from "../styles/Form";
-
-import { projectData } from "./ProjectsData";
+  CloudUpload,
+  LabelSelect,
+  Loading,
+} from "./styles";
 
 const Home = () => {
-  const [formValues, setFormValues] = useState({ project: "", url: "" });
-  const { setReports } = useContext(ReportContext);
+  const navigate = useNavigate();
 
-  let navigate = useNavigate();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { reports, setReports } = useContext(ReportsContext);
+  const [values, setValues] = useState({ url: "", project: "" });
 
-  const handleChangeFormValues = useCallback(
+  const handleChangeValues = useCallback(
     (e) => {
-      setFormValues({
-        ...formValues,
-        [e.target.name]: e.target.value,
-      });
+      setValues({ ...values, [e.target.name]: e.target.value });
     },
-    [formValues]
+    [values]
   );
 
-  const handleSubmit = useCallback(
+  const handleSubmitForm = useCallback(
     async (e) => {
       e.preventDefault();
       try {
-        const response = await postRepositoryUrl(formValues);
+        setIsSubmitted(true);
+        const response = await sendRepository(values);
 
-        setReports(response.data);
-        localStorage.setItem("teste",JSON.stringify(response.data));
-
-        navigate("/reports");
+        if (response.status === 200) {
+          navigate("/reports");
+          setIsSubmitted(false);
+          setReports(response.data);
+          setValues({ url: "", project: "" });
+          localStorage.setItem("storageReports", JSON.stringify(response.data));
+        }
       } catch (error) {
         console.log(error);
       }
     },
-    [formValues]
+    [values, reports]
   );
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        <FormGroup>
-          <FormLabel>
-            Insira a URL do repositório <OctoFace />
-          </FormLabel>
-          <Input
-            name="url"
-            onChange={handleChangeFormValues}
-            value={formValues.url}
-          />
-          <UploadIcon />
-        </FormGroup>
-        <FormGroup>
-          <FormLabel>Selecione o nome do projeto</FormLabel>
-          <Select name="project" onChange={handleChangeFormValues}>
-            {projectData.map((project, index) => (
-              <option value={project.name} key={index}>
-                {project.selectName}
-              </option>
-            ))}
-          </Select>
-        </FormGroup>
-        <Button type="submit">Enviar</Button>
-      </Form>
+      <Container center={true}>
+        {isSubmitted ? (
+          <>
+            <Loading>
+              <h1>
+                Aguarde, estamos fazendo as comparações com o Banco de dados!
+                Isso pode demorar um pouco.
+              </h1>
+              <ThreeDots
+                color="#ff4791"
+                width="100"
+                visible={true}
+                ariaLabel="falling-lines-loading"
+              />
+            </Loading>
+          </>
+        ) : (
+          <Form onSubmit={handleSubmitForm}>
+            <Group>
+              <Label htmlFor="url">
+                Insira a URL do repositório <OctoFace />
+              </Label>
+              <Input
+                id="url"
+                name="url"
+                value={values.url}
+                onChange={handleChangeValues}
+              />
+              <CloudUpload />
+            </Group>
+            <Group>
+              <Select id="project" name="project" onChange={handleChangeValues}>
+                <option value="driveneats">Driven Eats</option>
+                <option value="cineflex">Cineflex</option>
+              </Select>
+              <LabelSelect htmlFor="project">
+                <GoTriangleDown />
+              </LabelSelect>
+            </Group>
+            <Group>
+              <Submit type="submit">Enviar</Submit>
+            </Group>
+          </Form>
+        )}
+      </Container>
     </>
   );
 };

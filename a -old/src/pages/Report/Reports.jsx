@@ -1,11 +1,10 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ThreeCircles } from "react-loader-spinner";
 import styled from "styled-components";
-import { ReportContext } from "../../hooks/Context/ReportsContext";
+import Sidebar from "../../components/Sidebar/Sidebar";
 import { ModalLoader } from "../Styles/Modal";
 
 import Report from "./Report";
-import SidebarComponent from "./SidebarComponent";
 
 const Reports = () => {
   const [allReports, setAllReports] = useState([]);
@@ -13,6 +12,8 @@ const Reports = () => {
   const getMossGeneratedPage = useCallback(async () => {
     try {
       const storage = JSON.parse(localStorage.getItem("teste"));
+
+      console.log(storage);
 
       setAllReports(storage);
     } catch (error) {
@@ -26,7 +27,7 @@ const Reports = () => {
 
   return (
     <>
-      <SidebarComponent allReports={allReports} />
+      <Sidebar allReports={allReports} />
       <Container>
         {allReports ? (
           allReports.map((reports, index) => (

@@ -1,13 +1,19 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 
-export const SidebarContext = createContext();
+const SidebarContext = createContext();
 
-export const SidebarContextProvider = ({ children }) => {
+const SidebarContextProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const toggleSidebarOpen = useCallback(() => {
+    setIsOpen(!isOpen);
+  }, [isOpen]);
+
   return (
-    <SidebarContext.Provider value={{ isOpen, setIsOpen }}>
+    <SidebarContext.Provider value={{ isOpen, toggleSidebarOpen }}>
       {children}
     </SidebarContext.Provider>
   );
 };
+
+export { SidebarContext, SidebarContextProvider };
