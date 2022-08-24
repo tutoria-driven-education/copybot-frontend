@@ -1,15 +1,16 @@
 import { createContext, useState } from "react";
 
-const ReportContext = createContext();
+const ReportsContext = createContext();
 
-const ReportContextProvider = ({ children }) => {
+const ReportsContextProvider = ({ children }) => {
   const [reports, setReports] = useState();
 
   return (
-    <ReportContext.Provider value={{ reports, setReports }}>
+    <ReportsContext.Provider value={{ reports, setReports }}>
       {children}
-    </ReportContext.Provider>
+    </ReportsContext.Provider>
   );
 };
 
-export { ReportContext, ReportContextProvider };
+export { ReportsContext, ReportsContextProvider };
+  

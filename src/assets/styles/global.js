@@ -1,6 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
+
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,
@@ -55,13 +56,8 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    color: #FFF;
-    overflow: scroll;
+    color: #fff;
     background-color: #0E0E13;
     font-family: 'Lexend Deca', sans-serif;
-
-    @media screen and (min-width: 992px) {
-      overflow-x: hidden;
-    }
   }
 `;

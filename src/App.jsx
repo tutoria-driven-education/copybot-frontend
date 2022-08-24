@@ -1,26 +1,26 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { GlobalStyles } from "./assets/styles/global";
+import Navbar from "./components/Navbar/Navbar";
+import { ReportsContextProvider } from "./hooks/context/ReportsContext";
+import { SidebarContextProvider } from "./hooks/context/SidebarContext";
 
-import Home from "./pages/Home";
-import Reports from "./pages/Report";
-import Navbar from "./components/Navbar";
-import { ReportContextProvider } from "./hooks/Context/ReportsContext";
-import { SidebarContextProvider } from "./hooks/Context/SidebarContext";
+import Home from "./pages/home";
+import Reports from "./pages/reports/Reports";
 
 const App = () => {
   return (
     <>
       <GlobalStyles />
       <SidebarContextProvider>
-        <ReportContextProvider>
+        <ReportsContextProvider>
           <BrowserRouter>
             <Navbar />
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route index element={<Home />} />
               <Route path="/reports" element={<Reports />} />
             </Routes>
           </BrowserRouter>
-        </ReportContextProvider>
+        </ReportsContextProvider>
       </SidebarContextProvider>
     </>
   );
