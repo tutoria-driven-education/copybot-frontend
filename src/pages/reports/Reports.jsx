@@ -8,7 +8,7 @@ import Report from "../../components/Report";
 import { Loader } from "./styles";
 
 const Reports = () => {
-  const { reports, setReports } = useContext(ReportsContext);
+  const { reports } = useContext(ReportsContext);
 
   return (
     <>

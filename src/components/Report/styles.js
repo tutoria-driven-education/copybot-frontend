@@ -90,4 +90,5 @@ const Code = styled.div`
   }
 `;
 
-export { ReportStyle, Row, Column, Code };
+export { ReportStyle,Row, Column, Code };
+
