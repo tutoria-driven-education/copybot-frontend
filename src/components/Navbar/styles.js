@@ -16,6 +16,7 @@ const Center = styled.div`
   position: relative;
   align-items: center;
   justify-content: center;
+
 `;
 
 const Bars = styled(GoThreeBars)`
