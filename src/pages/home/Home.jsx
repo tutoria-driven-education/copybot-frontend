@@ -4,6 +4,7 @@ import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import { ReportsContext } from "../../hooks/context/ReportsContext";
 import { sendRepository } from "../../services/api";
+import { projects } from "../../assets/projects/data";
 import {
   Container,
   Form,
@@ -47,7 +48,7 @@ const Home = () => {
           localStorage.setItem("storageReports", JSON.stringify(response.data));
         }
       } catch (error) {
-        setIsSubmitted(true)
+        setIsSubmitted(false);
       }
     },
     [values, reports]
@@ -82,13 +83,23 @@ const Home = () => {
                 name="url"
                 value={values.url}
                 onChange={handleChangeValues}
+                required
               />
               <CloudUpload />
             </Group>
             <Group>
-              <Select id="project" name="project" onChange={handleChangeValues}>
-                <option value="driveneats">Driven Eats</option>
-                <option value="cineflex">Cineflex</option>
+              <Select
+                id="project"
+                name="project"
+                onChange={handleChangeValues}
+                required
+              >
+                <option>Escolha um projeto</option>
+                {projects.map((project, index) => (
+                  <option value={project.name} key={index}>
+                    {project.name}
+                  </option>
+                ))}
               </Select>
               <LabelSelect htmlFor="project">
                 <GoTriangleDown />
