@@ -1,10 +1,12 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { GoOctoface, GoCloudUpload } from "react-icons/go";
 
 const Container = styled.section`
   height: 90vh;
   padding: 32px;
   display: flex;
+  position: relative;
   margin-top: 91px;
   flex-direction: column;
   align-items: ${(props) => (props.center ? "center" : "initial")};
@@ -42,6 +44,17 @@ const Input = styled.input`
   border-radius: 10px;
   padding: 0 42px 0 12px;
   background-color: #a19f9f;
+
+  &::placeholder {
+    color: #444;
+    font-weight: 500;
+  }
+
+  &:focus {
+    &::placeholder {
+      color: #222;
+    }
+  }
 `;
 
 const Select = styled.select`
@@ -66,12 +79,21 @@ const Submit = styled.button`
   padding: 12px;
   border: none;
   cursor: pointer;
+  margin: 0 0 18px 0;
   font-size: 1.2rem;
   border-radius: 10px;
   background-color: #ff4791;
 
   &:hover {
     background-color: #c44276;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  color: #ccc;
+
+  &:hover {
+    color: #fff;
   }
 `;
 
@@ -124,4 +146,5 @@ export {
   CloudUpload,
   LabelSelect,
   Loading,
+  StyledLink,
 };
