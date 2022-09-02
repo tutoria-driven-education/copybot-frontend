@@ -30,4 +30,14 @@ const IconWarning = styled(IoAlertCircleSharp)`
   font-size: 1.4rem;
 `;
 
-export { Anchor, IconSuccess, IconWarning };
+const IconWarningOrange = styled(IoAlertCircleSharp)`
+  color: #ff7a4a;
+  font-size: 1.4rem;
+`;
+
+const IconYellow = styled(IoAlertCircleSharp)`
+  color: #ffe14a;
+  font-size: 1.4rem;
+`;
+
+export { Anchor, IconSuccess, IconWarning, IconWarningOrange, IconYellow };

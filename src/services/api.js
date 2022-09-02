@@ -8,3 +8,8 @@ export const sendRepository = async (body) => {
   const promise = await api.post("/git/download-url", body);
   return promise;
 };
+
+export const compareTwoProject = async (body) => {
+  const promise = await api.post("/git/check-single/", body);
+  return promise;
+};

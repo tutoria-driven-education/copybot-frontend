@@ -17,6 +17,7 @@ import {
   CloudUpload,
   LabelSelect,
   Loading,
+  StyledLink,
 } from "./styles";
 
 const Home = () => {
@@ -45,7 +46,6 @@ const Home = () => {
           setIsSubmitted(false);
           setReports(response.data);
           setValues({ url: "", project: "" });
-          localStorage.setItem("storageReports", JSON.stringify(response.data));
         }
       } catch (error) {
         setIsSubmitted(false);
@@ -107,6 +107,7 @@ const Home = () => {
             </Group>
             <Group>
               <Submit type="submit">Enviar</Submit>
+              <StyledLink to="/compare">Comparar dois repositórios</StyledLink>
             </Group>
           </Form>
         )}

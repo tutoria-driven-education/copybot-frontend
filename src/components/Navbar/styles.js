@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { GoThreeBars } from "react-icons/go";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 const Navigation = styled.nav`
   top: 0;
@@ -26,4 +27,12 @@ const Bars = styled(GoThreeBars)`
   position: absolute;
 `;
 
-export { Navigation, Bars, Center };
+const Back = styled(IoArrowBackOutline)`
+  left: 0px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 2.2rem;
+  position: absolute;
+`;
+
+export { Navigation, Bars, Center, Back };

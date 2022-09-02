@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { ReportStyle, Row, Column, Code } from "./styles";
 
 const Report = ({ table, columns, index }) => {
-  
   return (
     <ReportStyle key={index}>
-      <div dangerouslySetInnerHTML={{ __html: table }}></div>
+      <div id={index} dangerouslySetInnerHTML={{ __html: table }}></div>
 
       <Row>
         {columns.map((column, index) => {

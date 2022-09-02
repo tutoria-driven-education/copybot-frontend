@@ -10,6 +10,8 @@ import { Loader } from "./styles";
 const Reports = () => {
   const { reports } = useContext(ReportsContext);
 
+  console.log(reports)
+
   return (
     <>
       <Container>

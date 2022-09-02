@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import { useCallback, useState } from "react";
 import { GoTriangleDown } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 import { projects } from "../../assets/projects/data";
+import { compareTwoProject } from "../../services/api";
+import { ReportsContext } from "../../hooks/context/ReportsContext";
 import {
   Container,
   Form,
@@ -11,12 +15,19 @@ import {
   Input,
   Submit,
   OctoFace,
+  Loading,
 } from "../home/styles";
+import { ThreeDots } from "react-loader-spinner";
 
 const Compare = () => {
+  const navigate = useNavigate();
+
+  const { setReports } = useContext(ReportsContext);
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [formValues, setFormValues] = useState({
-    firstRepository: "",
-    secondRepository: "",
+    url1: "",
+    url2: "",
     project: "",
   });
 
@@ -27,50 +38,86 @@ const Compare = () => {
     [formValues]
   );
 
-  const handleSubmitForm = useCallback(() => {}, []);
+  const handleSubmitForm = useCallback(
+    async (e) => {
+      e.preventDefault();
+      try {
+        setIsSubmitted(true);
+
+        const response = await compareTwoProject(formValues);
+
+        navigate("/reports");
+        setReports([{ ...response.data }]);
+        setIsSubmitted(false);
+        setFormValues({
+          url1: "",
+          url2: "",
+          project: "",
+        });
+      } catch (error) {
+        setIsSubmitted(false);
+      }
+    },
+    [formValues]
+  );
 
   return (
     <>
       <Container center={true}>
-        <Form>
-          <Group>
-            <Label>
-              Insira a URL dos repositórios <OctoFace />
-            </Label>
-            <Input
-              name="firstRepository"
-              placeholder="Primeiro repositório"
-              value={formValues.firstRepository}
-              onChange={handleChangeInput}
-              required
+        {isSubmitted ? (
+          <Loading>
+            <h1>
+              Aguarde estamos comparandos os dois projetos! Isso pode demorar um
+              pouco.
+            </h1>
+            <ThreeDots
+              color="#ff4791"
+              width="100"
+              visible={true}
+              ariaLabel="falling-lines-loading"
             />
-          </Group>
-          <Group>
-            <Input
-              name="secondRepository"
-              placeholder="Segundo repositório"
-              value={formValues.secondRepository}
-              onChange={handleChangeInput}
-              required
-            />
-          </Group>
-          <Group>
-            <Select name="project" onChange={handleChangeInput} required>
-              <option>Escolha um projeto</option>
-              {projects.map((project, index) => (
-                <option value={project.name} key={index}>
-                  {project.name}
-                </option>
-              ))}
-            </Select>
-            <LabelSelect>
-              <GoTriangleDown />
-            </LabelSelect>
-          </Group>
-          <Group>
-            <Submit>Enviar</Submit>
-          </Group>
-        </Form>
+          </Loading>
+        ) : (
+          <Form onSubmit={handleSubmitForm}>
+            <Group>
+              <Label>
+                Insira a URL dos repositórios <OctoFace />
+              </Label>
+              <Input
+                name="url1"
+                placeholder="Primeiro repositório"
+                value={formValues.url1}
+                onChange={handleChangeInput}
+                required
+              />
+            </Group>
+            <Group>
+              <Input
+                name="url2"
+                placeholder="Segundo repositório"
+                value={formValues.url2}
+                onChange={handleChangeInput}
+                required
+              />
+            </Group>
+            <Group>
+              <Select name="project" onChange={handleChangeInput} required>
+                <option>Escolha um projeto</option>
+                {projects.map((project, index) => (
+                  <option value={project.name} key={index}>
+                    {project.name}
+                  </option>
+                ))}
+              </Select>
+              <LabelSelect>
+                <GoTriangleDown />
+              </LabelSelect>
+            </Group>
+            <Group>
+              <Submit type="submit">Enviar</Submit>
+            </Group>
+          </Form>
+        )}
       </Container>
     </>
   );

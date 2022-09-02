@@ -20,7 +20,7 @@ const App = () => {
             <Routes>
               <Route index element={<Home />} />
               <Route path="/reports" element={<Reports />} />
-              <Route path="/to-compare" element={<Compare />} />
+              <Route path="/compare" element={<Compare />} />
             </Routes>
           </BrowserRouter>
         </ReportsContextProvider>
