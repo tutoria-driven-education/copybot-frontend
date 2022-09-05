@@ -45,7 +45,7 @@ const Compare = () => {
         setIsSubmitted(true);
 
         const response = await compareTwoProject(formValues);
-
+        console.log(response)
         navigate("/reports");
         setReports([{ ...response.data }]);
         setIsSubmitted(false);

@@ -17,7 +17,7 @@ const Report = ({ table, columns, index }) => {
           return (
             <Column key={index}>
               <Code>
-                <div dangerouslySetInnerHTML={{ __html: newColumn }}></div>
+                <div dangerouslySetInnerHTML={{ __html: column }}></div>
               </Code>
             </Column>
           );
