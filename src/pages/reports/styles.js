@@ -13,4 +13,10 @@ const Loader = styled.div`
   background-color: #000000b0;
 `;
 
-export { Loader };
+const Timer = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 32px;
+`;
+
+export { Loader, Timer };

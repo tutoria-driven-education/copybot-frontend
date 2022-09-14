@@ -5,7 +5,7 @@ const api = axios.create({
 });
 
 export const sendRepository = async (body) => {
-  const promise = await api.post("/git/download-url", body);
+  const promise = await api.post("/git/check-all", body);
   return promise;
 };
 

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { ReportsContext } from "../../hooks/context/ReportsContext";
 import { sendRepository } from "../../services/api";
 import { projects } from "../../assets/projects/data";
+import { TimerContext } from "../../hooks/context/TimerContext";
 import {
   Container,
   Form,
@@ -24,6 +25,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const { setInitialTime, setCurrentTime } = useContext(TimerContext);
   const { reports, setReports } = useContext(ReportsContext);
   const [values, setValues] = useState({ url: "", project: "" });
 
@@ -38,18 +40,24 @@ const Home = () => {
     async (e) => {
       e.preventDefault();
       try {
+        setInitialTime(Date.now());
         setIsSubmitted(true);
         const response = await sendRepository(values);
 
         if (response.status === 200) {
           navigate("/reports");
+          setCurrentTime(Date.now());
           setIsSubmitted(false);
           setReports(response.data);
-          setValues({ url: "", project: "" });
         }
       } catch (error) {
+        setInitialTime(0);
+        console.log(error);
         setIsSubmitted(false);
-      }
+      } /* finally {
+        setIsSubmitted(false);
+        setValues({ url: "", project: "" });
+      } */
     },
     [values, reports]
   );

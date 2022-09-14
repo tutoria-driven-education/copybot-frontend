@@ -5,16 +5,17 @@ import { ThreeCircles } from "react-loader-spinner";
 
 import Sidebar from "../../components/Sidebar";
 import Report from "../../components/Report";
-import { Loader } from "./styles";
+import { Loader, Timer } from "./styles";
+import { TimerContext } from "../../hooks/context/TimerContext";
 
 const Reports = () => {
+  const { time } = useContext(TimerContext);
   const { reports } = useContext(ReportsContext);
-
-  console.log(reports)
 
   return (
     <>
       <Container>
+        <Timer>Tempo estimado: {parseInt(time)} minutos</Timer>
         {reports ? (
           <>
             <Sidebar reports={reports} />
