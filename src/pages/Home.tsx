@@ -65,7 +65,7 @@ const Home = () => {
         {loading ? (
           <Form.Loading>
             <Form.Title>
-              Aguarde, estamos comparandos os dois projetos! Isso pode demorar
+              Aguarde, estamos comparando os dois projetos! Isso pode demorar
               um pouco.
             </Form.Title>
             <ThreeDots
