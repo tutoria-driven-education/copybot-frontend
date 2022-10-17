@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://script-colinhas-bot.sistemas.driven.com.br",
+  baseURL: "https://spybot.sistemas.driven.com.br/",
   headers: {
     "Content-Type": "application/json",
     Authorization:
