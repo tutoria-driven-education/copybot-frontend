@@ -1,4 +1,5 @@
-import { Navigate } from "react-router-dom";
+import { useCallback, useEffect, useLayoutEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { verifyToken } from "../services/api";
 
@@ -7,26 +8,24 @@ interface IAuthRouteProps {
 }
 
 const AuthRoute = ({ children }: IAuthRouteProps) => {
+  const navigate = useNavigate();
   const { token } = useAuth();
-
-  const verifyValidToken = async () => {
-    const response = await verifyToken(token);
-
-    if (response.status !== 200) {
-      return false;
-    }
-    return true;
-  };
-
-  const isValidToken = verifyValidToken();
-
-  if (!isValidToken) {
-    return <Navigate to="/" />;
-  }
 
   if (!token) {
     return <Navigate to="/" />;
   }
+
+  const validToken = useCallback(async () => {
+    try {
+      await verifyToken(token);
+    } catch (error) {
+      return navigate("/");
+    }
+  }, [token]);
+
+  useEffect(() => {
+    validToken();
+  }, [validToken]);
 
   return <>{children}</>;
 };

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const mossServices = axios.create({
-  baseURL: "https://spybot.sistemas.driven.com.br/",
+  baseURL: "https://spybot.sistemas.driven.com.br",
   headers: {
     "Content-Type": "application/json",
     Authorization:
@@ -10,7 +10,7 @@ const mossServices = axios.create({
 });
 
 const authServices = axios.create({
-  baseURL: "https://spybot-auth-api.herokuapp.com/",
+  baseURL: "http://localhost:5000",
   headers: {
     "Content-Type": "application/json",
   },
