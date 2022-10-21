@@ -59,6 +59,10 @@ const Global = createGlobalStyle`
     background-color: #0E0E13;
     font-family: 'Lexend Deca', sans-serif;
   }
+
+  button {
+    cursor: pointer;
+  }
 `;
 
 export default Global;

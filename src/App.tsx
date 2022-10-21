@@ -1,10 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
-import { Navbar } from "./components";
-import { Home, Result } from "./pages";
+import { AuthRoute, Navbar } from "./components";
+import { Home, Login, Result } from "./pages";
 import { ResultsContextProvider } from "./hooks/ResultContext";
-
 
 const App = () => {
   return (
@@ -13,8 +12,23 @@ const App = () => {
         <BrowserRouter>
           <Navbar />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/resultado" element={<Result />} />
+            <Route index element={<Login />} />
+            <Route
+              path="/home"
+              element={
+                <AuthRoute>
+                  <Home />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path="/result"
+              element={
+                <AuthRoute>
+                  <Result />
+                </AuthRoute>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </ResultsContextProvider>
