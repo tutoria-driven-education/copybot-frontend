@@ -1,4 +1,4 @@
-import { useCallback, useState, useContext } from "react";
+import { useCallback, useState, useContext, useEffect } from "react";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -10,13 +10,15 @@ import Toast from "../styles/Toast";
 import { Container } from "../styles/Layout";
 
 import projects from "../assets/data/projects";
-import { compareTwoProject } from "../services/api";
+import { compareTwoProject, verifyToken } from "../services/api";
 import { ResultContext } from "../hooks/ResultContext";
 import formSchemaValidate from "../schema/formSchemaValidate";
+import useAuth from "../hooks/useAuth";
 
 const Home = () => {
   const navigate = useNavigate();
 
+  const { token } = useAuth();
   const { setResult } = useContext<React.SetStateAction<any>>(ResultContext);
 
   const [loading, setLoading] = useState(false);
