@@ -10,7 +10,7 @@ const mossServices = axios.create({
 });
 
 const authServices = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://spybot-auth-api.herokuapp.com",
   headers: {
     "Content-Type": "application/json",
   },
