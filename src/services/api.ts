@@ -1,11 +1,18 @@
 import axios from "axios";
 
-const api = axios.create({
+const mossServices = axios.create({
   baseURL: "https://spybot.sistemas.driven.com.br/",
   headers: {
     "Content-Type": "application/json",
     Authorization:
       "Bearer eyJhbGciOiJIUzI1NiJ9.c2VuaGFfc3VwZXJfc2VjcmV0YV9wYXJhX2RyaXZlbg.8rodg9m182NA84woW_3xfL-HrwHdnDeDcgq81al0NB4",
+  },
+});
+
+const authServices = axios.create({
+  baseURL: "http://localhost:5000",
+  headers: {
+    "Content-Type": "application/json",
   },
 });
 
@@ -15,8 +22,23 @@ interface DataValues {
   project: string;
 }
 
+interface ILogin {
+  email: string;
+  password: string;
+}
+
 const compareTwoProject = async (data: DataValues) => {
-  return await api.post("/git/check-single", data);
+  return await mossServices.post("/git/check-single", data);
 };
 
-export { compareTwoProject };
+const signIn = async (data: ILogin) => {
+  return await authServices.post("/sign-in", data);
+};
+
+const verifyToken = async (token: string) => {
+  return await authServices.get("/verify-token", {
+    headers: { "x-access-token": `${token}` },
+  });
+};
+
+export { compareTwoProject, signIn, verifyToken };

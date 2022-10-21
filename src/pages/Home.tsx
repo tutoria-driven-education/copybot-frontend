@@ -50,7 +50,7 @@ const Home = () => {
         if (error instanceof Yup.ValidationError) {
           return toast.error(`${error.message}`);
         }
-        toast.warning(`${error.message}`);
+        toast.warning(`${error.response.data.message}`);
       } finally {
         setLoading(false);
       }
@@ -60,13 +60,13 @@ const Home = () => {
 
   return (
     <>
-      <Toast position="bottom-right" hideProgressBar />
+      <Toast position="bottom-right" autoClose={3000} hideProgressBar />
       <Container>
         {loading ? (
           <Form.Loading>
             <Form.Title>
-              Aguarde, estamos comparando os dois projetos! Isso pode demorar
-              um pouco.
+              Aguarde, estamos comparando os dois projetos! Isso pode demorar um
+              pouco.
             </Form.Title>
             <ThreeDots
               color="#ff4791"

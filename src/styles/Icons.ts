@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BiArrowBack } from "react-icons/bi";
+import { BiArrowBack, BiLock, BiEnvelope } from "react-icons/bi";
 import { GoThreeBars, GoOctoface } from "react-icons/go";
 
 const Bars = styled(GoThreeBars)`
@@ -21,4 +21,14 @@ const Back = styled(BiArrowBack)`
   position: absolute;
 `;
 
-export default { Bars, Github, Back };
+const Lock = styled(BiLock)`
+  color: #ff7bbd;
+  font-size: 1.8rem;
+`;
+
+const Email = styled(BiEnvelope)`
+  color: #ff7bbd;
+  font-size: 1.8rem;
+`;
+
+export default { Bars, Github, Back, Lock, Email };
