@@ -11,8 +11,8 @@ const NavbarComponent = () => {
     <>
       <Navbar.Container>
         <Navbar.Flex>
-          {pathname === "/resultado" && (
-            <Icons.Back onClick={() => navigate("/")} />
+          {pathname === "/result" && (
+            <Icons.Back onClick={() => navigate("/home")} />
           )}
           <img
             src="https://hub.driven.com.br/algorithms/4de17e59e871b2af7c42.svg"
