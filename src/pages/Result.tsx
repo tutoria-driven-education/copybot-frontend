@@ -11,7 +11,7 @@ const Results = () => {
 
   useEffect(() => {
     if (!result.table) {
-      navigate("/", { state: { error: true } });
+      navigate("/home", { state: { error: true } });
     }
   }, []);
 
