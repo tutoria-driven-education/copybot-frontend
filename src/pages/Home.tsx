@@ -42,7 +42,7 @@ const Home = () => {
         const response = await compareTwoProject(form);
 
         if (response.data) {
-          navigate("/resultado");
+          navigate("/result");
           setResult(response.data);
           setForm({ url1: "", url2: "", project: "" });
           return;
