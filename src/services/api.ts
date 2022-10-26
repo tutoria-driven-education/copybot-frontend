@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const mossServices = axios.create({
-  baseURL: "https://spybot.sistemas.driven.com.br",
+  baseURL: "https://spy-bot-1.sistemas.driven.com.br",
   headers: {
     "Content-Type": "application/json",
     Authorization:
