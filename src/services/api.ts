@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const mossServices = axios.create({
-  baseURL: "https://spy-bot-1.sistemas.driven.com.br",
+  baseURL: "https://spy-bot-4.sistemas.driven.com.br",
   headers: {
     "Content-Type": "application/json",
     Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.c2VuaGFfc3VwZXJfc2VjcmV0YV9wYXJhX2RyaXZlbg.8rodg9m182NA84woW_3xfL-HrwHdnDeDcgq81al0NB4",
+      `Bearer eyJhbGciOiJIUzI1NiJ9.c2VuaGFfc3VwZXJfc2VjcmV0YV9wYXJhX2RyaXZlbg.8rodg9m182NA84woW_3xfL-HrwHdnDeDcgq81al0NB4`,
   },
 });
 
