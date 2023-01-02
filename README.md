@@ -2,7 +2,7 @@
 
 <p>Projeto desenvolvido com intuito de facilitar a busca por plágios nos projetos entregues</p>
 
-<h2>Instalação e inicialização do projeto (<a href="https://copybot.vercel.app/" target="__blank">deploy</a>)</h2>
+<h2>Instalação e inicialização do projeto (<a href="https://copybot.vercel.app/" target="_blank">deploy</a>)</h2>
 
 1. Faça um clone do repositório do projeto (necessário ter o git)
 ```
