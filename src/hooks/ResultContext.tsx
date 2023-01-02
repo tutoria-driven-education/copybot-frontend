@@ -13,6 +13,11 @@ export interface ICreateContextType {
   >;
 }
 
+type UseStateType = {
+  table: string;
+  columns: string[];
+}
+
 type ContextProviderProps = {
   children: React.ReactNode;
 };
@@ -26,7 +31,7 @@ const ResultContext = createContext<ICreateContextType>({
 });
 
 const ResultContextProvider = ({ children }: ContextProviderProps) => {
-  const [result, setResult] = useState({
+  const [result, setResult] = useState<UseStateType>({
     table: "",
     columns: [],
   });
