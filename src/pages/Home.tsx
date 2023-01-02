@@ -33,7 +33,6 @@ export default function Home() {
             "result",
             JSON.stringify(response.data) as string
           );
-          setResult(response.data as ResponseDataType);
           navigate("/result");
         }
       } catch (error) {
