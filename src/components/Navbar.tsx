@@ -1,27 +1,27 @@
+import { BiArrowBack } from "react-icons/bi";
 import { useLocation, useNavigate } from "react-router-dom";
-
-import Icons from "../styles/Icons";
 import Navbar from "../styles/Navbar";
 
-const NavbarComponent = () => {
+export default function NavbarComponent() {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const location = useLocation();
 
   return (
     <>
       <Navbar.Container>
-        <Navbar.Flex>
-          {pathname === "/result" && (
-            <Icons.Back onClick={() => navigate("/home")} />
-          )}
+        {location.pathname !== "/" && (
+          <Navbar.Button onClick={() => navigate(-1)}>
+            <BiArrowBack />
+          </Navbar.Button>
+        )}
+
+        <Navbar.Brand>
           <img
-            src="https://hub.driven.com.br/algorithms/4de17e59e871b2af7c42.svg"
-            alt=""
+            src="https://uploads-ssl.webflow.com/62235d098ddf9185c2d74422/62235d7c6c3db99f41e74ca4_logo.svg"
+            alt="driven education"
           />
-        </Navbar.Flex>
+        </Navbar.Brand>
       </Navbar.Container>
     </>
   );
-};
-
-export default NavbarComponent;
+}

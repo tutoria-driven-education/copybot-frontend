@@ -1,25 +1,18 @@
-import Column from "../styles/Column";
+import Results from "../styles/Results";
 
-const ColumnComponent = ({ column }: any) => {
-  // Tratando a string antes de entrar no componente
-  column = column.replace(/&gt;&gt;&gt;&gt;/g, "<br/><br/><div class='title'>");
-  column = column.replace(/file/g, "Arquivo");
-  column = column.split(".js").join(".js</div>");
-  column = column.split(".ts").join(".ts</div>");
-  column = column.split(".css").join(".css</div>");
-  column = column.split(".html").join(".html</div>");
+interface ColumnProps {
+  innerHTML: string;
+}
 
+export default function Column({ innerHTML }: ColumnProps) {
+
+  innerHTML = innerHTML.replace(/(\/\* &lt;filePath&gt; -{19})/g, "<div class='file-path'>");
+  innerHTML = innerHTML.replace(/(-{19} &lt;\/filePath&gt; \*\/)/g, "</div>");
+
+  console.log(innerHTML)
   return (
-    <>
-      <Column.Content>
-        <Column.Border>
-          <Column.StyledInnerHTML
-            dangerouslySetInnerHTML={{ __html: column }}
-          ></Column.StyledInnerHTML>
-        </Column.Border>
-      </Column.Content>
-    </>
+    <Results.Col>
+      <div dangerouslySetInnerHTML={{ __html: innerHTML }}></div>
+    </Results.Col>
   );
-};
-
-export default ColumnComponent;
+}

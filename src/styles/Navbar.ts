@@ -1,20 +1,31 @@
 import styled from "styled-components";
 
 const Container = styled.nav`
-  top: 0;
-  z-index: 1;
   width: 100%;
+  padding: 24px;
+  display: flex;
   position: fixed;
-  padding: 28px;
+  align-items: center;
+  justify-content: center;
   background-color: #45455c;
 `;
 
-const Flex = styled.div`
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+const Brand = styled.div`
+  img {
+    width: 132px;
+  }
+`
 
-export default { Container, Flex };
+const Button = styled.button`
+  left: 24px;
+  border: none;
+  position: absolute;
+  background-color: transparent;
+
+  svg {
+    color: #fff;
+    font-size: 2rem;
+  }
+`
+
+export default { Container, Brand, Button };

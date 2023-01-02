@@ -1,26 +1,41 @@
-import { createContext, useState } from "react";
+import { createContext, Dispatch, SetStateAction, useState } from "react";
 
-interface ResultContextProps {
-  children: React.ReactNode;
+export interface ICreateContextType {
+  result: {
+    table: string;
+    columns: string[];
+  };
+  setResult: Dispatch<
+    SetStateAction<{
+      table: string;
+      columns: string[];
+    }>
+  >;
 }
 
-const ResultContext = createContext(null);
+type ContextProviderProps = {
+  children: React.ReactNode;
+};
 
-const ResultsContextProvider = ({ children }: ResultContextProps) => {
+const ResultContext = createContext<ICreateContextType>({
+  result: {
+    table: "",
+    columns: [],
+  },
+  setResult: () => {},
+});
+
+const ResultContextProvider = ({ children }: ContextProviderProps) => {
   const [result, setResult] = useState({
-    studentName: "",
-    studentDatabase: "",
     table: "",
     columns: [],
   });
 
   return (
-    <ResultContext.Provider
-      value={{ result, setResult } as React.SetStateAction<any>}
-    >
+    <ResultContext.Provider value={{ result, setResult }}>
       {children}
     </ResultContext.Provider>
   );
 };
 
-export { ResultContext, ResultsContextProvider };
+export { ResultContext, ResultContextProvider };

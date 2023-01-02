@@ -1,102 +1,61 @@
-import { useNavigate } from "react-router-dom";
-import React, { useCallback, useState } from "react";
-import { toast } from "react-toastify";
-import * as Yup from "yup";
+import { useCallback, useState } from "react";
+import { BiEnvelope, BiLock } from "react-icons/bi";
+import Form from "../styles/Form";
 
-import loginSchemaValidate from "../schema/loginSchemaValidate";
-import { signIn } from "../services/api";
-
-import Icons from "../styles/Icons";
-import { Container } from "../styles/Layout";
-import LoginForm from "../styles/LoginForm";
-import Toast from "../styles/Toast";
-import useAuth from "../hooks/useAuth";
-
-const Login = () => {
-  const navigate = useNavigate();
-
-  const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ email: "", password: "" });
-
-  const handleChange = useCallback(
-    (e: React.FormEvent<HTMLInputElement>) => {
-      const { name, value } = e.target as HTMLInputElement;
-      setForm((prev) => ({ ...prev, [name]: value }));
-    },
-    [form]
-  );
+export default function Login() {
+  const [values, setValues] = useState({ email: "", password: "" });
 
   const handleSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
+    (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-
       try {
-        await loginSchemaValidate(form);
-        setLoading(true);
-
-        const response = await signIn(form);
-
-        if (response.status === 200) {
-          navigate("/home");
-          localStorage.setItem("token", JSON.stringify(response.data.token));
-          return;
-        }
-      } catch (error: any) {
-        if (error instanceof Yup.ValidationError) {
-          return toast.error(`${error.message}`);
-        }
-        toast.warning(`${error.response.data.message}`);
-      } finally {
-        setLoading(false);
-      }
+        
+      } catch (error) {}
     },
-    [form]
+    [values]
+  );
+
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [e.target.name]: e.target.value });
+    },
+    [values]
   );
 
   return (
     <>
-      <Toast position="bottom-right" autoClose={3000} hideProgressBar />
-      <Container>
-        <LoginForm.Horizontal onSubmit={handleSubmit}>
-          <LoginForm.Group>
-            <LoginForm.Title>Login</LoginForm.Title>
-          </LoginForm.Group>
-          <LoginForm.Group>
-            <LoginForm.Label htmlFor="email">
-              <Icons.Email />
-            </LoginForm.Label>
-            <LoginForm.Control
+      <Form.Container>
+        <Form.Horizontal onSubmit={handleSubmit} login={true}>
+          <Form.Title>Entrar</Form.Title>
+          <Form.Group>
+            <Form.Control
               name="email"
-              autoComplete="email"
-              placeholder="Digite seu email"
+              type="text"
               onChange={handleChange}
-              value={form.email}
-              disabled={loading}
+              value={values.email}
+              placeholder="E-mail"
             />
-          </LoginForm.Group>
-          <LoginForm.Group>
-            <LoginForm.Label htmlFor="password">
-              <Icons.Lock />
-            </LoginForm.Label>
-            <LoginForm.Control
+            <Form.LabelIcon>
+              <BiEnvelope />
+            </Form.LabelIcon>
+          </Form.Group>
+          <Form.Group>
+            <Form.Control
               name="password"
               type="password"
-              autoComplete="current-password"
-              placeholder="Digite sua senha"
               onChange={handleChange}
-              value={form.password}
-              disabled={loading}
+              value={values.password}
+              placeholder="Senha"
             />
-          </LoginForm.Group>
-          <LoginForm.Group>
-            <LoginForm.Submit type="submit" disabled={loading}>
-              Entrar
-            </LoginForm.Submit>
-          </LoginForm.Group>
-        </LoginForm.Horizontal>
-      </Container>
+            <Form.LabelIcon>
+              <BiLock />
+            </Form.LabelIcon>
+          </Form.Group>
+          <Form.Group>
+            <Form.Submit type="submit">Entrar</Form.Submit>
+          </Form.Group>
+        </Form.Horizontal>
+      </Form.Container>
     </>
   );
-};
-
-export default Login;
+}

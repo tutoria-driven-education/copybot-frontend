@@ -1,39 +1,73 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ResultContextProvider } from "./hooks/ResultContext";
+import GlobalStyles from "./styles/Global";
 
-import { AuthRoute, Navbar } from "./components";
-import { Home, Login, Result } from "./pages";
-import { ResultsContextProvider } from "./hooks/ResultContext";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Result from "./pages/Result";
+import Navbar from "./components/Navbar";
+import Error from "./pages/Error";
+import History from "./pages/History";
+import CompareMany from "./pages/CompareMany";
+import ResultMany from "./pages/ResultMany";
 
-const App = () => {
+export default function App() {
   return (
     <>
-      <ResultsContextProvider>
+      <GlobalStyles />
+      <ResultContextProvider>
         <BrowserRouter>
-          <Navbar />
           <Routes>
-            <Route index element={<Login />} />
             <Route
-              path="/home"
+              path="/"
               element={
-                <AuthRoute>
+                <>
+                  <Navbar />
                   <Home />
-                </AuthRoute>
+                </>
               }
             />
+            <Route path="/login" element={<Login />} />
             <Route
               path="/result"
               element={
-                <AuthRoute>
+                <>
+                  <Navbar />
                   <Result />
-                </AuthRoute>
+                </>
               }
             />
+             <Route
+              path="/result-many"
+              element={ 
+                <>
+                  <Navbar />
+                  <ResultMany />
+                </>
+              }
+            />
+            <Route
+              path="/history"
+              element={
+                <>
+                  <Navbar />
+                  <History />
+                </>
+              }
+            />
+            <Route
+              path="/one-to-database"
+              element={ 
+                <>
+                  <Navbar />
+                  <CompareMany />
+                </>
+              }
+            />
+            <Route path="*" element={<Error />} />
           </Routes>
         </BrowserRouter>
-      </ResultsContextProvider>
+      </ResultContextProvider>
     </>
   );
-};
-
-export default App;
+}

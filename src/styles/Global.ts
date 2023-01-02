@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-const Global = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,
@@ -27,10 +27,6 @@ const Global = createGlobalStyle`
     display: block;
   }
 
-  body {
-    line-height: 1;
-  }
-
   ol, ul {
     list-style: none;
   }
@@ -44,25 +40,49 @@ const Global = createGlobalStyle`
     content: '';
     content: none;
   }
-
+  
   table {
     border-collapse: collapse;
     border-spacing: 0;
   }
-
-  * {
-    box-sizing: border-box;
-  }
-
+  
   body {
+    line-height: 1;
     color: #fff;
     background-color: #0E0E13;
     font-family: 'Lexend Deca', sans-serif;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+      height: 6px;
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #ff7bbd;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 12px;
+    }
+
+    &::-webkit-scrollbar-corner {
+      display: none;
+    }
   }
 
   button {
     cursor: pointer;
   }
+
+  input, button, select {
+    outline: none;
+    font-family: "Lexend Deca", sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
 `;
 
-export default Global;
+export default GlobalStyles;

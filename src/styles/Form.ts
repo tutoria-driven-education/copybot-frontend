@@ -1,113 +1,171 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { ToastContainer } from "react-toastify";
 
-const Horizontal = styled.form`
-  width: 400px;
-`;
-
-const Title = styled.h2`
-  margin: 0 0 16px 0;
-  font-size: 1.2rem;
+const Container = styled.main`
   display: flex;
+  height: 100vh;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  svg {
-    margin-left: 0.75rem;
+  .loading-text {
+    width: 600px;
+    font-size: 1.4rem;
+    text-align: center;
+    line-height: 1.8rem;
   }
+`;
+
+interface HorizontalProps {
+  login: boolean;
+}
+
+const Horizontal = styled.form`
+  width: 420px;
+  padding: 12px;
+  border-radius: 24px;
+  background-color: ${(props: HorizontalProps) =>
+    props.login ? "#343444" : "transparent"};
+`;
+
+const Title = styled.h2`
+  padding: 0 12px;
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-bottom: 16px;
+  text-align: center;
 `;
 
 const Group = styled.div`
-  width: 100%;
-  padding: 8px;
+  padding: 12px;
   position: relative;
 `;
 
+interface ControlProps {
+  active: boolean;
+}
+
 const Control = styled.input`
   width: 100%;
-  height: 50px;
+  height: 45px;
   border: none;
-  border-radius: 10px;
-  font-size: 1.2rem;
-  background-color: #a19f9f;
-  padding: 12px;
-  font-family: "Lexend Deca", sans-serif;
+  font-size: 1.4rem;
+  border-radius: 6px;
+  padding: 0 8px 0 40px;
+  transition: border 0.2s;
+  border: 2px solid transparent;
 
-  &::placeholder {
-    color: #444;
+  & ~ label {
+    svg {
+      color: ${(props: ControlProps) => (props.active ? "#ff7bbd" : "#a8a8b3")};
+    }
   }
 
   &:focus {
-    &::placeholder {
-      color: #222;
+    border: 2px solid #ff7bbd;
+
+    & ~ label {
+      svg {
+        color: #ff7bbd;
+      }
     }
+  }
+
+  &::placeholder {
+    color: #a8a8b3;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+  }
+`;
+
+const LabelIcon = styled.label`
+  position: absolute;
+  left: 16px;
+  top: 18px;
+
+  svg {
+    color: #a8a8b3;
+    font-size: 2rem;
+  }
+`;
+
+const Submit = styled.button`
+  width: 100%;
+  height: 45px;
+  border: none;
+  color: #ffffff;
+  font-size: 1.4rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  background-color: #ff7bbd;
+
+  &:hover {
+    background-color: #dc4e95;
+  }
+
+  &:disabled {
+    background-color: #ed6fae;
+  }
+`;
+
+const Navigate = styled(Link)`
+  width: 100%;
+  color: #fff;
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #ccc;
   }
 `;
 
 const Select = styled.select`
   width: 100%;
-  height: 50px;
-  padding: 0 12px;
-  font-size: 1.2rem;
-  border-radius: 10px;
-  background-color: #a19f9f;
-  font-family: "Lexend Deca", sans-serif;
-`;
-
-const Label = styled.label`
-  top: 20px;
-  right: 24px;
-  position: absolute;
-`;
-
-const Submit = styled.button`
-  width: 100%;
-  color: #fff;
-  height: 50px;
-  cursor: pointer;
-  font-size: 1.2rem;
-  transition: 0.2s;
+  height: 45px;
   border: none;
-  border-radius: 10px;
-  background-color: #ff4791;
+  font-size: 1.4rem;
+  border-radius: 6px;
+  padding: 0 8px 0 40px;
+  transition: border 0.2s;
+  border: 2px solid transparent;
+  color: ${(props: ControlProps) => (props.active ? "#000" : "#a8a8b3")};
 
-  &:hover {
-    background-color: #e53a7f;
+  & ~ label {
+    svg {
+      color: ${(props: ControlProps) => (props.active ? "#ff7bbd" : "#a8a8b3")};
+    }
   }
-`;
 
-const Error = styled(ToastContainer)`
-  .Toastify__toast--error,
-  .Toastify__toast--warning,
-  .Toastify__toast--success {
-    color: #fff;
-    border-radius: 10px;
-    background-color: #333;
-    font-family: "Lexend Deca", sans-serif;
+  &:focus {
+    border: 2px solid #ff7bbd;
+
+    & ~ label {
+      svg {
+        color: #ff7bbd;
+      }
+    }
   }
-`;
 
-const Loading = styled.div`
-  width: 580px;
-  display: flex;
-  text-align: center;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-
-  h2 {
-    font-size: 1.4rem;
+  &:disabled {
+    background-color: #ccc;
   }
 `;
 
 export default {
+  Container,
   Horizontal,
+  Title,
   Group,
   Control,
-  Label,
   Submit,
-  Title,
+  LabelIcon,
+  Navigate,
   Select,
-  Error,
-  Loading,
 };

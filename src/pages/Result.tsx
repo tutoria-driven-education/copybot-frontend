@@ -1,42 +1,39 @@
-import { useContext, useEffect } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
-
-import Result from "../styles/Result";
-import { Column, Table } from "../components";
+import { useContext, useEffect, useState } from "react";
 import { ResultContext } from "../hooks/ResultContext";
+import Results from "../styles/Results";
+import Head from "../components/Head";
+import Column from "../components/Column";
 
-const Results = () => {
-  const navigate = useNavigate();
-  const { result } = useContext<React.SetStateAction<any>>(ResultContext);
+export default function Result() {
+  //const { result } = useContext(ResultContext);
+
+  const [result, setResultTest] = useState({
+    table: "",
+    columns: [],
+  });
 
   useEffect(() => {
-    if (!result.table) {
-      navigate("/home", { state: { error: true } });
-    }
+    setResultTest(JSON.parse(localStorage.getItem("result") as string)[0]);
   }, []);
 
   return (
     <>
-      {result.table ? (
+      {result.table !== "" ? (
         <>
-          <Result.Flex>
-            <Table
-              table={result.table}
-              studentName={result.studentName}
-              studentDatabase={result.studentDatabase}
-            />
-          </Result.Flex>
-          <Result.Container>
-            {result.columns.map((column: string, index: number) => (
-              <Column key={index} column={column} />
-            ))}
-          </Result.Container>
+          <Results.Container>
+            <Head innerHTML={result.table} />
+            <Results.Row>
+              {result.columns.map((column, index) => (
+                <Column key={index} innerHTML={column} />
+              ))}
+            </Results.Row>
+          </Results.Container>
         </>
       ) : (
-        <></>
+        <>
+          <h1>Carregando...</h1>
+        </>
       )}
     </>
   );
-};
-
-export default Results;
+}
