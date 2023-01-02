@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { StyledComponent } from "styled-components";
 
 const Container = styled.main`
   display: flex;
@@ -45,7 +45,7 @@ interface ControlProps {
   active: boolean;
 }
 
-const Control = styled.input`
+const Control: any = styled.input`
   width: 100%;
   height: 45px;
   border: none;

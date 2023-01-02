@@ -13,7 +13,7 @@ export default function CompareMany() {
   const navigate = useNavigate();
 
   const { values, handleChange } = useForm({ url: "", project: "" });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(true);
   const { setResult } = useContext(ResultContext);
 
   const handleSubmit = useCallback(
@@ -44,14 +44,14 @@ export default function CompareMany() {
       <Form.Container>
         {isSubmitting ? (
           <>
-            <h2 className="loading-text">Aguarde! Estamos procurando projetos semelhantes em nosso banco de dados!</h2>
-            <MagnifyingGlass
+            <h2 className="loading-text">Página em manutenção!</h2>
+            {/* <MagnifyingGlass
               height="90"
               width="90"
               color="#ff7bbd"
               ariaLabel="three-dots-loading"
               visible={true}
-            />
+            /> */}
           </>
         ) : (
           <Form.Horizontal onSubmit={handleSubmit} login={false}>
