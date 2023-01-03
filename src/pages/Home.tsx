@@ -2,7 +2,8 @@ import { useCallback, useContext, useState } from "react";
 import { BiCodeBlock, BiGitBranch, BiGitRepoForked } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { MagnifyingGlass, ThreeDots } from "react-loader-spinner";
-import { ICreateContextType, ResultContext } from "../hooks/ResultContext";
+import { ResultContext } from "../hooks/ResultContext";
+import Loading from "../components/Loading";
 import { checkOneToOne } from "../services/api";
 import projects from "../data/projectsData";
 import useForm from "../hooks/UseForm";
@@ -11,7 +12,7 @@ import Form from "../styles/Form";
 type ResponseDataType = {
   table: string;
   columns: string[];
-}
+};
 
 export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,16 +48,7 @@ export default function Home() {
       <Form.Container>
         {isSubmitting ? (
           <>
-            <h2 className="loading-text">
-              Aguarde! Estamos analisando os dois projetos!
-            </h2>
-            <MagnifyingGlass
-              height="90"
-              width="90"
-              color="#ff7bbd"
-              ariaLabel="three-dots-loading"
-              visible={true}
-            />
+            <Loading message="Aguarde! Estamos analisando os projetos!" />
           </>
         ) : (
           <Form.Horizontal onSubmit={handleSubmit} login={false}>

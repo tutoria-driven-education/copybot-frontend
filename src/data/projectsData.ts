@@ -1,6 +1,4 @@
 const projects = [
-  "Globo.com - Front",
-  "Instagram - Front",
   "DrivenEats - Front",
   "Parrots - Front",
   "UOL - Front",

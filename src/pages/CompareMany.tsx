@@ -45,7 +45,7 @@ export default function CompareMany() {
         {isSubmitting ? (
           <>
             <h2 className="loading-text">Página em manutenção!</h2>
-            {/* <MagnifyingGlass
+           {/* <MagnifyingGlass
               height="90"
               width="90"
               color="#ff7bbd"
