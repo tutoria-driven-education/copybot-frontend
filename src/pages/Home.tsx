@@ -30,10 +30,8 @@ export default function Home() {
         const response = await checkOneToOne(values);
 
         if (response.status === 200) {
-          localStorage.setItem(
-            "result",
-            JSON.stringify(response.data) as string
-          );
+          setResult(response.data[0]);
+          localStorage.setItem("result", JSON.stringify(response.data) as string);
           navigate("/result");
         }
       } catch (error: any) {
