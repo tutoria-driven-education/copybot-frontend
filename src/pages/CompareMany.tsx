@@ -2,6 +2,7 @@ import { useCallback, useState, useContext } from "react";
 import { BiGitBranch, BiCodeBlock } from "react-icons/bi";
 import { MagnifyingGlass } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
+import { FcVlc } from "react-icons/fc";
 
 import Form from "../styles/Form";
 import useForm from "../hooks/UseForm";
@@ -44,8 +45,9 @@ export default function CompareMany() {
       <Form.Container>
         {isSubmitting ? (
           <>
-            <h2 className="loading-text">Página em manutenção!</h2>
-           {/* <MagnifyingGlass
+            <FcVlc fontSize={128} />
+            <h2 className="loading-text">Página em manutenção, em breve será liberada!</h2>
+            {/* <MagnifyingGlass
               height="90"
               width="90"
               color="#ff7bbd"

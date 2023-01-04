@@ -10,11 +10,13 @@ import Error from "./pages/Error";
 import History from "./pages/History";
 import CompareMany from "./pages/CompareMany";
 import ResultMany from "./pages/ResultMany";
+import Toast from "./components/Toast";
 
 export default function App() {
   return (
     <>
       <GlobalStyles />
+      <Toast />
       <ResultContextProvider>
         <BrowserRouter>
           <Routes>
@@ -37,9 +39,9 @@ export default function App() {
                 </>
               }
             />
-             <Route
+            <Route
               path="/result-many"
-              element={ 
+              element={
                 <>
                   <Navbar />
                   <ResultMany />
@@ -57,7 +59,7 @@ export default function App() {
             />
             <Route
               path="/one-to-database"
-              element={ 
+              element={
                 <>
                   <Navbar />
                   <CompareMany />
