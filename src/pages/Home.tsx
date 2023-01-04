@@ -1,18 +1,16 @@
 import { useCallback, useContext, useState } from "react";
 import { BiCodeBlock, BiGitBranch, BiGitRepoForked } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-import { MagnifyingGlass, ThreeDots } from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
+import { oneToOneSchema } from "../schema/formSchema";
 import { ResultContext } from "../hooks/ResultContext";
 import Loading from "../components/Loading";
 import { checkOneToOne } from "../services/api";
 import projects from "../data/projectsData";
 import useForm from "../hooks/UseForm";
 import Form from "../styles/Form";
-
-type ResponseDataType = {
-  table: string;
-  columns: string[];
-};
+import { toast } from "react-toastify";
+import { ValidationError } from "yup";
 
 export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,6 +25,8 @@ export default function Home() {
       try {
         setIsSubmitting(true);
 
+        await oneToOneSchema.validate(values, { abortEarly: true });
+
         const response = await checkOneToOne(values);
 
         if (response.status === 200) {
@@ -36,7 +36,13 @@ export default function Home() {
           );
           navigate("/result");
         }
-      } catch (error) {
+      } catch (error: any) {
+        if (error instanceof ValidationError) {
+          return toast.error(`${error.message}`);
+        }
+
+        return toast.error(error.response.data.message);
+      } finally {
         setIsSubmitting(false);
       }
     },
