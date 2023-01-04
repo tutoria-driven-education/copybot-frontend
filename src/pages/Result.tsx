@@ -1,24 +1,23 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { ResultContext } from "../hooks/ResultContext";
 import Results from "../styles/Results";
 import Head from "../components/Head";
 import Column from "../components/Column";
 
 export default function Result() {
-  //const { result } = useContext(ResultContext);
-
-  const [result, setResultTest] = useState({
-    table: "",
-    columns: [],
-  });
+  const { result, setResult } = useContext(ResultContext);
 
   useEffect(() => {
-    setResultTest(JSON.parse(localStorage.getItem("result") as string)[0]);
+    const storageResult = localStorage.getItem("result");
+
+    if (storageResult) {
+      setResult(JSON.parse(storageResult)[0]);
+    }
   }, []);
 
   return (
     <>
-      {result.table !== "" ? (
+      {result.table ? (
         <>
           <Results.Container>
             <Head innerHTML={result.table} />
