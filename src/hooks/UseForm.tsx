@@ -9,10 +9,18 @@ type CheckOneToOne = {
 type CheckOneToMany = {
   url: string;
   project: string;
-}
+};
 
-function useForm(initialValues: CheckOneToMany | CheckOneToOne) {
-  const [values, setValues] = useState<React.SetStateAction<CheckOneToMany | CheckOneToOne | any>>(initialValues);
+type SignIn = {
+  email: string;
+  password: string;
+};
+
+function useForm(initialValues: CheckOneToMany | CheckOneToOne | SignIn) {
+  const [values, setValues] =
+    useState<
+      React.SetStateAction<CheckOneToMany | CheckOneToOne | SignIn | any>
+    >(initialValues);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

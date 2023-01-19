@@ -11,7 +11,7 @@ export default function Result() {
     const storageResult = localStorage.getItem("result");
 
     if (storageResult) {
-      setResult(JSON.parse(storageResult)[0]);
+      setResult(JSON.parse(storageResult));
     }
   }, []);
 

@@ -1,11 +1,9 @@
 import axios from "axios";
 
+// https://plagiarism-checker-bot-v2.sistemas.driven.com.br
+
 const api = axios.create({
   baseURL: "https://plagiarism-checker-bot-v2.sistemas.driven.com.br",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${import.meta.env["VITE_API_TOKEN"]}`,
-  },
 });
 
 type CheckOneToOne = {
@@ -19,12 +17,42 @@ type CheckOneToMany = {
   project: string;
 };
 
+type SignIn = {
+  email: string;
+  password: string;
+};
+
 const checkOneToOne = async (values: CheckOneToOne) => {
-  return await api.post("/git/check-single", values);
+  const token = JSON.parse(localStorage.getItem("token") as string);
+  return await api.post("/git/check-single", values, {
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    timeout: 100 * 600,
+  });
 };
 
 const checkOneToMany = async (values: CheckOneToMany) => {
-  return await api.post("/git/check-all", values);
+  const token = JSON.parse(localStorage.getItem("token") as string);
+
+  return await api.post("/git/check-all", values, {
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    timeout: 10000 * 600,
+  });
 };
 
-export { checkOneToOne, checkOneToMany };
+const signIn = async (values: SignIn) => {
+  const token = JSON.parse(localStorage.getItem("token") as string);
+  return await api.post("/auth/sign-in", values, {
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export { checkOneToOne, checkOneToMany, signIn };

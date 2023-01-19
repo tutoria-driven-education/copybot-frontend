@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useContext } from "react";
+import { ResultContext } from "../hooks/ResultContext";
 import Results from "../styles/Results";
 
 interface HeadProps {
@@ -12,6 +14,8 @@ interface IStudents {
 
 export default function Head({ innerHTML }: HeadProps) {
   //
+  const { result } = useContext(ResultContext);
+
   const [students, setStudents] = useState<IStudents[]>([
     { name: "", percent: "" },
     { name: "", percent: "" },
