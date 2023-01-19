@@ -8,9 +8,9 @@ import Result from "./pages/Result";
 import Navbar from "./components/Navbar";
 import Error from "./pages/Error";
 import History from "./pages/History";
-import CompareMany from "./pages/CompareMany";
 import ResultMany from "./pages/ResultMany";
 import Toast from "./components/Toast";
+import PrivateRoute from "./components/PrivateRoute";
 
 export default function App() {
   return (
@@ -20,50 +20,49 @@ export default function App() {
       <ResultContextProvider>
         <BrowserRouter>
           <Routes>
+            <Route path="/login" element={<Login />} />
             <Route
               path="/"
               element={
-                <>
-                  <Navbar />
-                  <Home />
-                </>
+                <PrivateRoute>
+                  <>
+                    <Navbar />
+                    <Home />
+                  </>
+                </PrivateRoute>
               }
             />
-            <Route path="/login" element={<Login />} />
             <Route
               path="/result"
               element={
-                <>
-                  <Navbar />
-                  <Result />
-                </>
+                <PrivateRoute>
+                  <>
+                    <Navbar />
+                    <Result />
+                  </>
+                </PrivateRoute>
               }
             />
             <Route
               path="/result-many"
               element={
-                <>
-                  <Navbar />
-                  <ResultMany />
-                </>
+                <PrivateRoute>
+                  <>
+                    <Navbar />
+                    <ResultMany />
+                  </>
+                </PrivateRoute>
               }
             />
             <Route
               path="/history"
               element={
-                <>
-                  <Navbar />
-                  <History />
-                </>
-              }
-            />
-            <Route
-              path="/one-to-database"
-              element={
-                <>
-                  <Navbar />
-                  <CompareMany />
-                </>
+                <PrivateRoute>
+                  <>
+                    <Navbar />
+                    <History />
+                  </>
+                </PrivateRoute>
               }
             />
             <Route path="*" element={<Error />} />

@@ -158,6 +158,19 @@ const Select = styled.select`
   }
 `;
 
+const Trade = styled.button`
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  margin-bottom: 14px;
+  text-decoration: underline;
+  background-color: transparent;
+
+  &:hover {
+    color: #ccc;
+  }
+`;
+
 export default {
   Container,
   Horizontal,
@@ -168,4 +181,5 @@ export default {
   LabelIcon,
   Navigate,
   Select,
+  Trade,
 };
