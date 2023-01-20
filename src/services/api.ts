@@ -41,7 +41,7 @@ const checkOneToMany = async (values: CheckOneToMany) => {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-    timeout: 10000 * 600,
+    timeout: 10000000 * 600,
   });
 };
 
