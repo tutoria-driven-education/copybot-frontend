@@ -39,7 +39,7 @@ export default function Home() {
               type="button"
               onClick={() => setIsCompareOneToOne(!isCompareOneToOne)}
             >
-              {isCompareOneToOne ? "Comparar com banco de dados" : ""}
+              {isCompareOneToOne ? "" : "Comparar um para um"}
             </Form.Trade>
             <Form.Navigate to="/history">
               Histórico de comparações
