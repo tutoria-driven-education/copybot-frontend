@@ -33,6 +33,8 @@ function FormOneToMany({
 
       const response = await checkOneToMany(data);
 
+      console.log(response);
+
       if (response.status === 200) {
         localStorage.setItem("result", JSON.stringify(response.data) as string);
         setResult(response.data);
@@ -43,6 +45,7 @@ function FormOneToMany({
         return toast.error(`${error.message}`);
       }
 
+      console.log(error.response)
       return toast.error(error.response.data.message);
     } finally {
       setIsSubmitting(false);

@@ -4,6 +4,7 @@ import Form from "../styles/Form";
 import FormOneToOne from "../components/FormOneToOne";
 import FormOneToMany from "../components/FormOneToMany";
 import Loading from "../components/Loading";
+import { FcVlc } from "react-icons/fc";
 
 export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,18 +25,21 @@ export default function Home() {
                 setIsSubmitting={setIsSubmitting}
               />
             ) : (
-              <FormOneToMany
-                isSubmitting={isSubmitting}
-                setIsSubmitting={setIsSubmitting}
-              />
+              <>
+                <FcVlc fontSize={64} />
+                <span className="loading-text">Aguarda essa página esta em manutenção!</span>
+
+                {/* <FormOneToMany
+                  isSubmitting={isSubmitting}
+                  setIsSubmitting={setIsSubmitting}
+                /> */}
+              </>
             )}
             <Form.Trade
               type="button"
               onClick={() => setIsCompareOneToOne(!isCompareOneToOne)}
             >
-              {isCompareOneToOne
-                ? "Comparar com banco de dados"
-                : "Comparar um para um"}
+              {isCompareOneToOne ? "Comparar com banco de dados" : ""}
             </Form.Trade>
             <Form.Navigate to="/history">
               Histórico de comparações
