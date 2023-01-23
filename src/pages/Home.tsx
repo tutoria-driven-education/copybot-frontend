@@ -26,20 +26,20 @@ export default function Home() {
               />
             ) : (
               <>
-                <FcVlc fontSize={64} />
-                <span className="loading-text">Aguarda essa página esta em manutenção!</span>
+                {/* <FcVlc fontSize={64} />
+                <span className="loading-text">Aguarda essa página esta em manutenção!</span> */}
 
-                {/* <FormOneToMany
+                <FormOneToMany
                   isSubmitting={isSubmitting}
                   setIsSubmitting={setIsSubmitting}
-                /> */}
+                />
               </>
             )}
             <Form.Trade
               type="button"
               onClick={() => setIsCompareOneToOne(!isCompareOneToOne)}
             >
-              {isCompareOneToOne ? "" : "Comparar um para um"}
+              {isCompareOneToOne ? "Comparar um para todos" : "Comparar um para um"}
             </Form.Trade>
             <Form.Navigate to="/history">
               Histórico de comparações

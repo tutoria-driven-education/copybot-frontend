@@ -28,8 +28,8 @@ const checkOneToOne = async (values: CheckOneToOne) => {
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
+      "Access-Control-Allow-Origin": "*",
     },
-    timeout: 100 * 600,
   });
 };
 

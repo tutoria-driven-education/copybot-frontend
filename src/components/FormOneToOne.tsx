@@ -37,7 +37,7 @@ function FormOneToOne({
       await oneToOneSchema.validate(data, { abortEarly: true });
 
       const response = await checkOneToOne(data);
-
+      
       if (response.status === 200) {
         localStorage.setItem(
           "result",
