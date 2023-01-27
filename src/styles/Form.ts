@@ -4,6 +4,7 @@ import styled, { StyledComponent } from "styled-components";
 const Container = styled.main`
   display: flex;
   height: 100vh;
+  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -171,6 +172,30 @@ const Trade = styled.button`
   }
 `;
 
+type MossStatusProps = {
+  status: boolean;
+};
+
+const MossStatus: any = styled.div`
+  top: 120px;
+  left: 24px;
+  width: 200px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  align-items: center;
+  border-radius: 12px;
+  background-color: #45455c;
+
+  span {
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    color: ${({ status }: MossStatusProps) => (status ? "#34f516" : "#f51616")};
+  }
+`;
+
 export default {
   Container,
   Horizontal,
@@ -182,4 +207,5 @@ export default {
   Navigate,
   Select,
   Trade,
+  MossStatus,
 };

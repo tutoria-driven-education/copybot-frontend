@@ -1,7 +1,5 @@
 import axios from "axios";
 
-// https://plagiarism-checker-bot-v2.sistemas.driven.com.br
-
 const api = axios.create({
   baseURL: "https://plagiarism-checker-bot-v2.sistemas.driven.com.br",
 });
@@ -45,6 +43,14 @@ const checkOneToMany = async (values: CheckOneToMany) => {
   });
 };
 
+const checkMossStatus = async () => {
+  const response = await axios.get(
+    "https://check-moss-status.onrender.com/moss/check-status"
+  );
+
+  return response.data.status;
+};
+
 const signIn = async (values: SignIn) => {
   const token = JSON.parse(localStorage.getItem("token") as string);
   return await api.post("/auth/sign-in", values, {
@@ -55,4 +61,4 @@ const signIn = async (values: SignIn) => {
   });
 };
 
-export { checkOneToOne, checkOneToMany, signIn };
+export { checkOneToOne, checkOneToMany, checkMossStatus, signIn };
