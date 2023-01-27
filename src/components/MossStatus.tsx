@@ -1,20 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useContext } from "react";
 
 import Form from "../styles/Form";
 import { checkMossStatus } from "../services/api";
+import { MossContext } from "../hooks/MossContext";
 
 function MossStatus() {
-  const [mossStatus, setMossStatus] = useState(false);
-
-  const getMossStatus = async () => {
-    const status = await checkMossStatus();
-
-    return setMossStatus(status);
-  };
-
-  useEffect(() => {
-    getMossStatus();
-  }, []);
+  const { mossStatus } = useContext(MossContext);
+  //const [mossStatus, setMossStatus] = useState(false);
 
   return (
     <>

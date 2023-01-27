@@ -1,17 +1,17 @@
 import { ValidationError } from "yup";
 import { toast } from "react-toastify";
-import { useState, useContext } from "react";
+import { useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { BiGitBranch, BiGitRepoForked, BiCodeBlock } from "react-icons/bi";
 
-import Loading from "./Loading";
 import Form from "../styles/Form";
 import projects from "../data/projectsData";
 import { checkOneToOne } from "../services/api";
 import { oneToOneSchema } from "../schema/formSchema";
 import { ResultContext } from "../hooks/ResultContext";
+import { MossContext } from "../hooks/MossContext";
 
 type FieldValues = {
   url1: string;
@@ -27,35 +27,43 @@ function FormOneToOne({
   setIsSubmitting: Function;
 }) {
   const navigate = useNavigate();
+  const { mossStatus } = useContext(MossContext);
   const { setResult } = useContext(ResultContext);
   const { handleSubmit, register, watch } = useForm<FieldValues>();
 
-  const submitForm: SubmitHandler<FieldValues> = async (data) => {
-    try {
-      setIsSubmitting(true);
+  const submitForm: SubmitHandler<FieldValues> = useCallback(
+    async (data) => {
+      try {
+        setIsSubmitting(true);
 
-      await oneToOneSchema.validate(data, { abortEarly: true });
+        if (!mossStatus) {
+          return toast.warn("O Moss está offline!");
+        }
 
-      const response = await checkOneToOne(data);
-      
-      if (response.status === 200) {
-        localStorage.setItem(
-          "result",
-          JSON.stringify(response.data.value) as string
-        );
-        setResult(response.data.value);
-        navigate("/result");
+        await oneToOneSchema.validate(data, { abortEarly: true });
+
+        const response = await checkOneToOne(data);
+
+        if (response.status === 200) {
+          localStorage.setItem(
+            "result",
+            JSON.stringify(response.data.value) as string
+          );
+          setResult(response.data.value);
+          navigate("/result");
+        }
+      } catch (error: any) {
+        if (error instanceof ValidationError) {
+          return toast.error(`${error.message}`);
+        }
+
+        return toast.error(error.response.data.message);
+      } finally {
+        setIsSubmitting(false);
       }
-    } catch (error: any) {
-      if (error instanceof ValidationError) {
-        return toast.error(`${error.message}`);
-      }
-
-      return toast.error(error.response.data.message);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    },
+    [mossStatus]
+  );
 
   return (
     <>

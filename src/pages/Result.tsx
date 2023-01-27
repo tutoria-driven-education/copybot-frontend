@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
 import { ResultContext } from "../hooks/ResultContext";
 import Results from "../styles/Results";
-import Head from "../components/Head";
-import Column from "../components/Column";
+
+import { Head, Column } from "../components/Result";
 
 export default function Result() {
   const { result, setResult } = useContext(ResultContext);
