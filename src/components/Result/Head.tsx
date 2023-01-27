@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useContext } from "react";
-import { ResultContext } from "../hooks/ResultContext";
-import Results from "../styles/Results";
+import { useEffect, useState, useContext } from "react";
+import { ResultContext } from "../../hooks/ResultContext";
+import Results from "../../styles/Results";
 
 interface HeadProps {
   innerHTML: string;
