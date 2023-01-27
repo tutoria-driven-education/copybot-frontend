@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Form from "../styles/Form";
 import FormOneToOne from "../components/FormOneToOne";
 import FormOneToMany from "../components/FormOneToMany";
+import MossStatus from "../components/MossStatus";
 import Loading from "../components/Loading";
 import { FcVlc } from "react-icons/fc";
 
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <>
       <Form.Container>
+        <MossStatus />
         {isSubmitting ? (
           <>
             <Loading message="Aguarde! Estamos analisando os projetos!" />
@@ -27,7 +29,9 @@ export default function Home() {
             ) : (
               <>
                 <FcVlc fontSize={64} />
-                <span className="loading-text">Aguarda essa página esta em manutenção!</span>
+                <span className="loading-text">
+                  Aguarda essa página esta em manutenção!
+                </span>
 
                 {/* <FormOneToMany
                   isSubmitting={isSubmitting}
