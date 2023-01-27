@@ -7,12 +7,12 @@ type MossContextType = {
 };
 
 const MossContext = createContext<MossContextType>({
-  mossStatus: true,
+  mossStatus: false,
   setMossStatus: () => {},
 });
 
 const MossContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [mossStatus, setMossStatus] = useState<boolean>(true);
+  const [mossStatus, setMossStatus] = useState<boolean>(false);
 
   const getMossStatus = async () => {
     const status = await checkMossStatus();
