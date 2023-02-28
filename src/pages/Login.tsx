@@ -17,7 +17,7 @@ type SignInValues = {
 export default function Login() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { handleSubmit, register } = useForm<SignInValues>();
+  const { handleSubmit, register, watch } = useForm<SignInValues>();
 
   const onSubmit: SubmitHandler<SignInValues> = async (data) => {
     try {
@@ -63,6 +63,7 @@ export default function Login() {
               placeholder="E-mail"
               disabled={isSubmitting}
               {...register("email")}
+              active={watch("email") ? true : false}
             />
             <Form.LabelIcon>
               <BiEnvelope />
@@ -75,6 +76,7 @@ export default function Login() {
               placeholder="Senha"
               disabled={isSubmitting}
               {...register("password")}
+              active={watch("password") ? true : false}
             />
             <Form.LabelIcon>
               <BiLock />

@@ -47,7 +47,7 @@ type ControlProps = {
   active: boolean;
 };
 
-const Control = styled.input<ControlProps>`
+const Control = styled.input`
   width: 100%;
   height: 45px;
   border: none;
@@ -59,7 +59,7 @@ const Control = styled.input<ControlProps>`
 
   & ~ label {
     svg {
-      color: ${({ active }) => (active ? "#ff7bbd" : "#a8a8b3")};
+      color: ${({ active }: ControlProps) => (active ? "#ff7bbd" : "#a8a8b3")};
     }
   }
 
