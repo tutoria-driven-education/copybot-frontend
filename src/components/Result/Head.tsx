@@ -2,41 +2,20 @@ import { useEffect, useState, useContext } from "react";
 import { ResultContext } from "../../hooks/ResultContext";
 import Results from "../../styles/Results";
 
-interface HeadProps {
-  innerHTML: string;
-}
-
-interface IStudents {
-  name: string;
-  percent: string;
-}
-
-export default function Head({ innerHTML }: HeadProps) {
-  //
+export default function Head() {
   const { result } = useContext(ResultContext);
-
-  const [students, setStudents] = useState<IStudents[]>([
-    { name: "", percent: "" },
-    { name: "", percent: "" },
-  ]);
+  const [percent, setPercent] = useState<string[]>([]);
 
   useEffect(() => {
-    const studentDatabase =
-      document.querySelectorAll("table tbody tr th")[2].innerHTML;
-    const studentDelivered =
-      document.querySelectorAll("table tbody tr th")[0].innerHTML;
-    const getPercentage: string[] = innerHTML.match(/(\d+)%/g) as string[];
+    const getPercentage: string[] = result.table.match(/(\d+)%/g) as string[];
 
-    setStudents([
-      { name: studentDelivered, percent: getPercentage[0] },
-      { name: studentDatabase, percent: getPercentage[1] },
-    ]);
+    setPercent(getPercentage);
   }, []);
 
   return (
     <Results.Head>
       <div
-        dangerouslySetInnerHTML={{ __html: innerHTML }}
+        dangerouslySetInnerHTML={{ __html: result.table }}
         style={{ display: "none" }}
       ></div>
       <center>
@@ -49,8 +28,8 @@ export default function Head({ innerHTML }: HeadProps) {
           </thead>
           <tbody>
             <tr>
-              <td>{students[0].name}</td>
-              <td>{students[1].name}</td>
+              <td>{`Nome: ${result.studentNameOne} | Porcentagem: ${percent[0]}`}</td>
+              <td>{`Nome: ${result.studentNameTwo} | Porcentagem: ${percent[1]}`}</td>
             </tr>
           </tbody>
         </table>

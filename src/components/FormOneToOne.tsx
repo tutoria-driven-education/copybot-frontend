@@ -17,9 +17,10 @@ type FieldValues = {
   url1: string;
   url2: string;
   project: string;
+  basefile: Blob[];
 };
 
-function FormOneToOne({
+export default function FormOneToOne({
   isSubmitting,
   setIsSubmitting,
 }: {
@@ -45,11 +46,10 @@ function FormOneToOne({
         const response = await checkOneToOne(data);
 
         if (response.status === 200) {
-          localStorage.setItem(
-            "result",
-            JSON.stringify(response.data.value) as string
-          );
-          setResult(response.data.value);
+          const newResponse = { ...response.data.value, type: "one-to-one" };
+          localStorage.setItem("result", JSON.stringify(newResponse) as string);
+
+          setResult(newResponse);
           navigate("/result");
         }
       } catch (error: any) {
@@ -64,6 +64,8 @@ function FormOneToOne({
     },
     [mossStatus]
   );
+
+  const fileName: any = watch("basefile");
 
   return (
     <>
@@ -109,6 +111,17 @@ function FormOneToOne({
           </Form.LabelIcon>
         </Form.Group>
         <Form.Group>
+          <Form.LabelFile
+            htmlFor="basefile"
+            labelText={
+              fileName && fileName.length !== 0
+                ? fileName[0].name
+                : "Nenhum arquivo selecionado"
+            }
+          />
+          <input type="file" id="basefile" {...register("basefile")} />
+        </Form.Group>
+        <Form.Group>
           <Form.Submit type="submit" disabled={isSubmitting}>
             {isSubmitting ? (
               <ThreeDots
@@ -128,5 +141,3 @@ function FormOneToOne({
     </>
   );
 }
-
-export default FormOneToOne;

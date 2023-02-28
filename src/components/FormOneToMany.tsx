@@ -11,12 +11,15 @@ import projects from "../data/projectsData";
 import { checkOneToMany } from "../services/api";
 import { ResultContext } from "../hooks/ResultContext";
 
+// ToDo: Criar camada para os tipos
+
 type FieldValues = {
   url: string;
   project: string;
+  basefile: Blob[];
 };
 
-function FormOneToMany({
+export default function FormOneToMany({
   isSubmitting,
   setIsSubmitting,
 }: {
@@ -33,11 +36,11 @@ function FormOneToMany({
 
       const response = await checkOneToMany(data);
 
-      console.log(response);
-
       if (response.status === 200) {
-        localStorage.setItem("result", JSON.stringify(response.data) as string);
-        setResult(response.data);
+        const newResponse = { ...response.data, type: "one-to-many" };
+
+        localStorage.setItem("result", JSON.stringify(newResponse) as string);
+        setResult(newResponse);
         navigate("/result");
       }
     } catch (error: any) {
@@ -45,12 +48,13 @@ function FormOneToMany({
         return toast.error(`${error.message}`);
       }
 
-      console.log(error.response)
       return toast.error(error.response.data.message);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const fileName: any = watch("basefile");
 
   return (
     <>
@@ -84,6 +88,17 @@ function FormOneToMany({
           </Form.LabelIcon>
         </Form.Group>
         <Form.Group>
+          <Form.LabelFile
+            htmlFor="basefile"
+            labelText={
+              fileName && fileName.length !== 0
+                ? fileName[0].name
+                : "Nenhum arquivo selecionado"
+            }
+          />
+          <input type="file" id="basefile" {...register("basefile")} />
+        </Form.Group>
+        <Form.Group>
           <Form.Submit type="submit" disabled={isSubmitting}>
             Enviar
           </Form.Submit>
@@ -92,5 +107,3 @@ function FormOneToMany({
     </>
   );
 }
-
-export default FormOneToMany;

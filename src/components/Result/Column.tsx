@@ -12,8 +12,6 @@ export default function Column({ innerHTML }: ColumnProps) {
 
   innerHTML = innerHTML.replace(/(-{19} &lt;\/filePath&gt; \*\/)/g, "</div>");
 
-  console.log("column")
-
   return (
     <Results.Col>
       <div dangerouslySetInnerHTML={{ __html: innerHTML }}></div>

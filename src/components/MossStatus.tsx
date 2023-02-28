@@ -1,21 +1,20 @@
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
+import { IoMdRefresh } from "react-icons/io";
 
 import Form from "../styles/Form";
-import { checkMossStatus } from "../services/api";
 import { MossContext } from "../hooks/MossContext";
 
-function MossStatus() {
-  const { mossStatus } = useContext(MossContext);
-  //const [mossStatus, setMossStatus] = useState(false);
+export default function MossStatus() {
+  const { mossStatus, getMossStatus } = useContext(MossContext);
 
   return (
     <>
       <Form.MossStatus status={mossStatus}>
-        Status do Moss:
-        {mossStatus ? <span> Online</span> : <span> Offline</span>}
+        Status Moss: <span>{mossStatus ? "Online" : "Offline"}</span>
+        <Form.UpdateStatus onClick={() => getMossStatus(true)}>
+          <IoMdRefresh />
+        </Form.UpdateStatus>
       </Form.MossStatus>
     </>
   );
 }
-
-export default MossStatus;

@@ -1,11 +1,19 @@
 import { useContext, useEffect } from "react";
-import { ResultContext } from "../hooks/ResultContext";
-import Results from "../styles/Results";
+import { Navigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import { Head, Column } from "../components/Result";
+import ResultOneToOne from "../components/ResultOneToOne";
+import ResultOneToMany from "../components/ResultOneToMany";
+import { ResultContext } from "../hooks/ResultContext";
 
 export default function Result() {
   const { result, setResult } = useContext(ResultContext);
+
+  if (!result.type) {
+    toast.error("Resultado não encontrado!");
+
+    return <Navigate to="/" />;
+  }
 
   useEffect(() => {
     const storageResult = localStorage.getItem("result");
@@ -17,22 +25,7 @@ export default function Result() {
 
   return (
     <>
-      {result.table ? (
-        <>
-          <Results.Container>
-            <Head innerHTML={result.table} />
-            <Results.Row>
-              {result.columns.map((column, index) => (
-                <Column key={index} innerHTML={column} />
-              ))}
-            </Results.Row>
-          </Results.Container>
-        </>
-      ) : (
-        <>
-          <h1>Carregando...</h1>
-        </>
-      )}
+      {result.type === "one-to-one" ? <ResultOneToOne /> : <ResultOneToMany />}
     </>
   );
 }

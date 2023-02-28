@@ -2,6 +2,7 @@ import { createContext, Dispatch, SetStateAction, useState } from "react";
 
 export interface ICreateContextType {
   result: {
+    type: string;
     table: string;
     columns: string[];
     studentNameOne: string;
@@ -9,6 +10,7 @@ export interface ICreateContextType {
   };
   setResult: Dispatch<
     SetStateAction<{
+      type: string;
       table: string;
       columns: string[];
       studentNameOne: string;
@@ -18,6 +20,7 @@ export interface ICreateContextType {
 }
 
 type UseStateType = {
+  type: string;
   table: string;
   columns: string[];
   studentNameOne: string;
@@ -30,6 +33,7 @@ type ContextProviderProps = {
 
 const ResultContext = createContext<ICreateContextType>({
   result: {
+    type: "",
     table: "",
     columns: [],
     studentNameOne: "",
@@ -39,12 +43,17 @@ const ResultContext = createContext<ICreateContextType>({
 });
 
 const ResultContextProvider = ({ children }: ContextProviderProps) => {
-  const [result, setResult] = useState<UseStateType>({
-    table: "",
-    columns: [],
-    studentNameOne: "",
-    studentNameTwo: "",
-  });
+  const storageItem = JSON.parse(localStorage.getItem("result") as string);
+
+  const [result, setResult] = useState<UseStateType>(
+    storageItem || {
+      type: "",
+      table: "",
+      columns: [],
+      studentNameOne: "",
+      studentNameTwo: "",
+    }
+  );
 
   return (
     <ResultContext.Provider value={{ result, setResult }}>

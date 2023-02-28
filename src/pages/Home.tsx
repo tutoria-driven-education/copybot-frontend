@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FcVlc } from "react-icons/fc";
+import { BsPerson, BsPeople } from "react-icons/bs";
 
 import Form from "../styles/Form";
 import FormOneToOne from "../components/FormOneToOne";
@@ -10,7 +10,7 @@ import { MossContextProvider } from "../hooks/MossContext";
 
 export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isCompareOneToOne, setIsCompareOneToOne] = useState(true);
+  const [isCompareOneToOne, setIsCompareOneToOne] = useState(false);
 
   return (
     <>
@@ -23,33 +23,31 @@ export default function Home() {
             </>
           ) : (
             <>
+              <Form.WrapperTrade>
+                <Form.WrapperToolTip>
+                  <Form.ToolTip>Comparar com apenas um projeto</Form.ToolTip>
+                  <BsPerson />
+                </Form.WrapperToolTip>
+                <Form.Trade
+                  status={isCompareOneToOne}
+                  onClick={() => setIsCompareOneToOne(!isCompareOneToOne)}
+                />
+                <Form.WrapperToolTip>
+                  <Form.ToolTip>Comparar com a base de dados</Form.ToolTip>
+                  <BsPeople />
+                </Form.WrapperToolTip>
+              </Form.WrapperTrade>
               {isCompareOneToOne ? (
-                <FormOneToOne
+                <FormOneToMany
                   isSubmitting={isSubmitting}
                   setIsSubmitting={setIsSubmitting}
                 />
               ) : (
-                <>
-                  <FcVlc fontSize={64} />
-                  <span className="loading-text">
-                    Aguarda essa página esta em manutenção!
-                  </span>
-
-                  {/* <FormOneToMany
+                <FormOneToOne
                   isSubmitting={isSubmitting}
                   setIsSubmitting={setIsSubmitting}
-                /> */}
-                </>
+                />
               )}
-              <Form.Trade
-                type="button"
-                onClick={() => setIsCompareOneToOne(!isCompareOneToOne)}
-              >
-                {isCompareOneToOne ? "" : "Comparar um para um"}
-              </Form.Trade>
-              <Form.Navigate to="/history">
-                Histórico de comparações
-              </Form.Navigate>
             </>
           )}
         </Form.Container>

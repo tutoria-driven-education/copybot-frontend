@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styled, { StyledComponent } from "styled-components";
 
 const Container = styled.main`
+  z-index: 1;
   display: flex;
   height: 100vh;
   position: relative;
@@ -22,7 +23,7 @@ interface HorizontalProps {
 }
 
 const Horizontal = styled.form`
-  width: 420px;
+  width: 460px;
   padding: 12px;
   border-radius: 24px;
   background-color: ${(props: HorizontalProps) =>
@@ -42,11 +43,11 @@ const Group = styled.div`
   position: relative;
 `;
 
-interface ControlProps {
+type ControlProps = {
   active: boolean;
-}
+};
 
-const Control: any = styled.input`
+const Control = styled.input<ControlProps>`
   width: 100%;
   height: 45px;
   border: none;
@@ -58,7 +59,7 @@ const Control: any = styled.input`
 
   & ~ label {
     svg {
-      color: ${(props: ControlProps) => (props.active ? "#ff7bbd" : "#a8a8b3")};
+      color: ${({ active }) => (active ? "#ff7bbd" : "#a8a8b3")};
     }
   }
 
@@ -78,6 +79,54 @@ const Control: any = styled.input`
 
   &:disabled {
     background-color: #ccc;
+  }
+`;
+
+type LabelProps = {
+  labelText: string;
+};
+
+const LabelFile = styled.label<LabelProps>`
+  height: 45px;
+  display: flex;
+  border-radius: 7px;
+  align-items: center;
+
+  &::before {
+    width: 35%;
+    transition: all 0.2s;
+    justify-content: center;
+    background-color: #888888;
+    border-radius: 6px 0 0 6px;
+    content: "Escolher arquivo";
+  }
+
+  &::after {
+    width: 65%;
+    color: #000000;
+    padding: 0 12px;
+    background-color: #ffffff;
+    border-radius: 0 6px 6px 0;
+    content: "${(props) => props.labelText}";
+  }
+
+  &::after,
+  &::before {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    &::before {
+      background-color: #666666;
+    }
+  }
+
+  & ~ input {
+    display: none;
   }
 `;
 
@@ -159,16 +208,54 @@ const Select = styled.select`
   }
 `;
 
-const Trade = styled.button`
+const ToolTip = styled.div`
+  left: -70%;
+  width: 120px;
+  bottom: 130%;
+  position: absolute;
+  background-color: #ff7bbda8;
   color: #fff;
-  border: none;
+  padding: 8px;
+  border-radius: 6px;
   font-size: 1rem;
-  margin-bottom: 14px;
-  text-decoration: underline;
-  background-color: transparent;
+  text-align: center;
+  transition: all 0.2s;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+
+  &::before {
+    left: 50%;
+    content: "";
+    bottom: -8px;
+    position: absolute;
+    transform: translateX(-50%) rotate(180deg);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #ff7bbda8;
+  }
+`;
+
+const WrapperToolTip = styled.div`
+  position: relative;
+  display: inline-block;
 
   &:hover {
-    color: #ccc;
+    ${ToolTip} {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  }
+`;
+
+const WrapperTrade = styled.div`
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin: 0 12px;
+    font-size: 1.6rem;
   }
 `;
 
@@ -176,24 +263,57 @@ type MossStatusProps = {
   status: boolean;
 };
 
-const MossStatus: any = styled.div`
-  top: 120px;
+const Trade = styled.button`
+  width: 50px;
+  height: 15px;
+  border: none;
+  border-radius: 24px;
+  position: relative;
+
+  &::before {
+    top: -2px;
+    left: ${({ status }: MossStatusProps) => (status ? "30px" : "0")};
+    content: "";
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ff7bbd;
+    position: absolute;
+    transition: all 0.2s;
+  }
+`;
+
+const StatusText = styled.span`
+  color: #ff0000;
+  font-weight: bold;
+  font-size: 1.2rem;
+`;
+
+const MossStatus = styled.div`
   left: 24px;
-  width: 200px;
-  padding: 12px;
+  top: 122px;
   display: flex;
-  justify-content: space-between;
+  padding: 12px;
+  border-radius: 6px;
   position: absolute;
   align-items: center;
-  border-radius: 12px;
   background-color: #45455c;
 
   span {
-    display: flex;
-    border-radius: 50%;
-    align-items: center;
-    color: ${({ status }: MossStatusProps) => (status ? "#34f516" : "#f51616")};
+    font-weight: 300;
+    font-size: 1.2rem;
+    margin: 0 0 0 6px;
+    color: ${({ status }: MossStatusProps) => (status ? "#00ff00" : "#ff0000")};
   }
+`;
+
+const UpdateStatus = styled.button`
+  border: none;
+  display: flex;
+  color: #ffffff;
+  font-size: 1.2rem;
+  align-items: center;
+  background-color: transparent;
 `;
 
 export default {
@@ -206,6 +326,12 @@ export default {
   LabelIcon,
   Navigate,
   Select,
+  WrapperTrade,
   Trade,
   MossStatus,
+  LabelFile,
+  ToolTip,
+  WrapperToolTip,
+  UpdateStatus,
+  StatusText,
 };

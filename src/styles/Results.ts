@@ -3,12 +3,10 @@ import styled from "styled-components";
 const Container = styled.div`
   width: 100%;
   margin: 0 auto;
-  padding: 0 36px;
+  padding: 90px 36px 0 36px;
 `;
 
 const Head = styled.div`
-  padding-top: 90px;
-
   table {
     overflow: hidden;
     border-radius: 12px;
@@ -16,7 +14,8 @@ const Head = styled.div`
     tr {
       background-color: #45455c;
 
-      th, td {
+      th,
+      td {
         padding: 12px;
       }
     }
