@@ -25,7 +25,9 @@ export default function Home() {
             <>
               <Form.WrapperTrade>
                 <Form.WrapperToolTip>
-                  <Form.ToolTip>Comparar com apenas um projeto</Form.ToolTip>
+                  <Form.ToolTip left="-70%" backgroundOpacity={true}>
+                    Comparar com apenas um projeto
+                  </Form.ToolTip>
                   <BsPerson />
                 </Form.WrapperToolTip>
                 <Form.Trade
@@ -33,7 +35,9 @@ export default function Home() {
                   onClick={() => setIsCompareOneToOne(!isCompareOneToOne)}
                 />
                 <Form.WrapperToolTip>
-                  <Form.ToolTip>Comparar com a base de dados</Form.ToolTip>
+                  <Form.ToolTip left="-70%" backgroundOpacity={true}>
+                    Comparar com a base de dados
+                  </Form.ToolTip>
                   <BsPeople />
                 </Form.WrapperToolTip>
               </Form.WrapperTrade>

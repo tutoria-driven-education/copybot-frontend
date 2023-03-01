@@ -4,7 +4,12 @@ import { useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { BiGitBranch, BiGitRepoForked, BiCodeBlock } from "react-icons/bi";
+import {
+  BiGitBranch,
+  BiGitRepoForked,
+  BiCodeBlock,
+  BiHelpCircle,
+} from "react-icons/bi";
 
 import Form from "../styles/Form";
 import projects from "../data/projectsData";
@@ -120,6 +125,15 @@ export default function FormOneToOne({
             }
           />
           <input type="file" id="basefile" {...register("basefile")} />
+          <Form.Info>
+            <Form.WrapperToolTip>
+              <Form.ToolTip left="-46px" backgroundOpacity={false}>
+                Selecione um arquivo base para a comparação. Caso não seja
+                selecionado, nenhum arquivo será considerado como base.
+              </Form.ToolTip>
+              <BiHelpCircle />
+            </Form.WrapperToolTip>
+          </Form.Info>
         </Form.Group>
         <Form.Group>
           <Form.Submit type="submit" disabled={isSubmitting}>

@@ -38,7 +38,12 @@ const Title = styled.h2`
   text-align: center;
 `;
 
+type FormGroupProps = {
+  flex?: boolean;
+};
+
 const Group = styled.div`
+  width: 100%;
   padding: 12px;
   position: relative;
 `;
@@ -208,12 +213,17 @@ const Select = styled.select`
   }
 `;
 
+type ToolTipProps = {
+  left?: string;
+  backgroundOpacity: boolean;
+}
+
 const ToolTip = styled.div`
-  left: -70%;
+  left: ${({ left }: ToolTipProps) => left};
   width: 120px;
   bottom: 130%;
   position: absolute;
-  background-color: #ff7bbda8;
+  background-color: ${({ backgroundOpacity }: ToolTipProps) => backgroundOpacity ? "#ff7bbda8" : "#ff7bbd"};
   color: #fff;
   padding: 8px;
   border-radius: 6px;
@@ -316,6 +326,15 @@ const UpdateStatus = styled.button`
   background-color: transparent;
 `;
 
+const Info = styled.div`
+  top: 22px;
+  right: -28px;
+  padding: 0 6px;
+  color: #ffffff;
+  font-size: 1.6rem;
+  position: absolute;
+`;
+
 export default {
   Container,
   Horizontal,
@@ -334,4 +353,5 @@ export default {
   WrapperToolTip,
   UpdateStatus,
   StatusText,
+  Info,
 };
