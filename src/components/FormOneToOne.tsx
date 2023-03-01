@@ -115,26 +115,26 @@ export default function FormOneToOne({
             <BiCodeBlock />
           </Form.LabelIcon>
         </Form.Group>
-        {/* <Form.Group>
-          <Form.LabelFile
+        <Form.Group style={{padding: 0}}>
+          {/* <Form.LabelFile
             htmlFor="basefile"
             labelText={
               fileName && fileName.length !== 0
                 ? fileName[0].name
                 : "Nenhum arquivo selecionado"
             }
-          />
-          <input type="file" id="basefile" {...register("basefile")} />
-          <Form.Info>
+          /> */}
+          <input type="hidden" id="basefile" {...register("basefile")} />
+          {/* <Form.Info>
             <Form.WrapperToolTip>
               <Form.ToolTip left="-46px" backgroundOpacity={false}>
-                Selecione um arquivo base para a comparação. Caso não seja
-                selecionado, nenhum arquivo será considerado como base.
+                Selecione um arquivo base para os projetos enviados!
+                Desabilitada no momento.
               </Form.ToolTip>
               <BiHelpCircle />
             </Form.WrapperToolTip>
-          </Form.Info>
-        </Form.Group> */}
+          </Form.Info> */}
+        </Form.Group>
         <Form.Group>
           <Form.Submit type="submit" disabled={isSubmitting}>
             {isSubmitting ? (

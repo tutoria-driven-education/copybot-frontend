@@ -87,17 +87,17 @@ export default function FormOneToMany({
             <BiCodeBlock />
           </Form.LabelIcon>
         </Form.Group>
-        {/* <Form.Group>
-          <Form.LabelFile
+        <Form.Group style={{padding: 0}}>
+          {/* <Form.LabelFile
             htmlFor="basefile"
             labelText={
               fileName && fileName.length !== 0
                 ? fileName[0].name
                 : "Nenhum arquivo selecionado"
             }
-          />
-          <input type="file" id="basefile" {...register("basefile")} />
-        </Form.Group> */}
+          /> */}
+          <input type="hidden" id="basefile" {...register("basefile")} />
+        </Form.Group>
         <Form.Group>
           <Form.Submit type="submit" disabled={isSubmitting}>
             Enviar
