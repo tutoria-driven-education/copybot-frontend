@@ -87,7 +87,7 @@ export default function FormOneToMany({
             <BiCodeBlock />
           </Form.LabelIcon>
         </Form.Group>
-        <Form.Group>
+        {/* <Form.Group>
           <Form.LabelFile
             htmlFor="basefile"
             labelText={
@@ -97,7 +97,7 @@ export default function FormOneToMany({
             }
           />
           <input type="file" id="basefile" {...register("basefile")} />
-        </Form.Group>
+        </Form.Group> */}
         <Form.Group>
           <Form.Submit type="submit" disabled={isSubmitting}>
             Enviar

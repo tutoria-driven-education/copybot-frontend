@@ -115,7 +115,7 @@ export default function FormOneToOne({
             <BiCodeBlock />
           </Form.LabelIcon>
         </Form.Group>
-        <Form.Group>
+        {/* <Form.Group>
           <Form.LabelFile
             htmlFor="basefile"
             labelText={
@@ -134,7 +134,7 @@ export default function FormOneToOne({
               <BiHelpCircle />
             </Form.WrapperToolTip>
           </Form.Info>
-        </Form.Group>
+        </Form.Group> */}
         <Form.Group>
           <Form.Submit type="submit" disabled={isSubmitting}>
             {isSubmitting ? (
