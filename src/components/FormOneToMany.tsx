@@ -33,6 +33,7 @@ export default function FormOneToMany({
 
   const submitForm: SubmitHandler<FieldValues> = async (data) => {
     try {
+      console.log(data)
       setIsSubmitting(true);
 
       await oneToManySchema.validate(data, { abortEarly: true });

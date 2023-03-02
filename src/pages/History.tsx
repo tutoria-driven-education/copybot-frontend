@@ -5,9 +5,7 @@ import Table from "../styles/Table";
 
 export default function History() {
   const [historic, setHistoric] = useState([]);
-
-  console.log(historic);
-
+  
   const loadHistoric = useCallback(async () => {
     try {
       const response = await getHistoric();

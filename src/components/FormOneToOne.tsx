@@ -44,10 +44,12 @@ export default function FormOneToOne({
 
         await oneToOneSchema.validate(data, { abortEarly: true });
 
-        if (data.basefile[0].type !== "application/x-zip-compressed") {
+        if (
+          data.basefile.length > 0 &&
+          data.basefile[0].type !== "application/x-zip-compressed"
+        ) {
           throw new ValidationError("O arquivo deve ser um zip");
         }
-
         if (!mossStatus) {
           return toast.warn("O Moss está offline!");
         }
@@ -68,6 +70,7 @@ export default function FormOneToOne({
           return toast.error(`${error.message}`);
         }
 
+        console.log(error)
         return toast.error(error.response.data.message);
       } finally {
         setIsSubmitting(false);
