@@ -59,7 +59,9 @@ const checkOneToMany = async (values: CheckOneToMany) => {
 };
 
 const checkMossStatus = async () => {
-  const response = await axios.get("https://check-moss-status.onrender.com/moss/check-status");
+  const response = await axios.get(
+    "https://check-moss-status.onrender.com/moss/check-status"
+  );
 
   return response.data.status;
 };
@@ -74,4 +76,14 @@ const signIn = async (values: SignIn) => {
   });
 };
 
-export { checkOneToOne, checkOneToMany, checkMossStatus, signIn };
+const getHistoric = async () => {
+  const token = JSON.parse(localStorage.getItem("token") as string);
+  return await api.get("/moss/historic", {
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export { checkOneToOne, checkOneToMany, checkMossStatus, signIn, getHistoric };

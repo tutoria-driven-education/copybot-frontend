@@ -42,6 +42,12 @@ export default function FormOneToOne({
       try {
         setIsSubmitting(true);
 
+        await oneToOneSchema.validate(data, { abortEarly: true });
+
+        if (data.basefile[0].type !== "application/x-zip-compressed") {
+          throw new ValidationError("O arquivo deve ser um zip");
+        }
+
         if (!mossStatus) {
           return toast.warn("O Moss está offline!");
         }
@@ -115,17 +121,17 @@ export default function FormOneToOne({
             <BiCodeBlock />
           </Form.LabelIcon>
         </Form.Group>
-        <Form.Group style={{padding: 0}}>
-          {/* <Form.LabelFile
+        <Form.Group>
+          <Form.LabelFile
             htmlFor="basefile"
             labelText={
               fileName && fileName.length !== 0
                 ? fileName[0].name
                 : "Nenhum arquivo selecionado"
             }
-          /> */}
-          <input type="hidden" id="basefile" {...register("basefile")} />
-          {/* <Form.Info>
+          />
+          <input type="file" id="basefile" {...register("basefile")} />
+          <Form.Info>
             <Form.WrapperToolTip>
               <Form.ToolTip left="-46px" backgroundOpacity={false}>
                 Selecione um arquivo base para os projetos enviados!
@@ -133,7 +139,7 @@ export default function FormOneToOne({
               </Form.ToolTip>
               <BiHelpCircle />
             </Form.WrapperToolTip>
-          </Form.Info> */}
+          </Form.Info>
         </Form.Group>
         <Form.Group>
           <Form.Submit type="submit" disabled={isSubmitting}>

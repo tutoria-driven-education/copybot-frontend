@@ -4,12 +4,13 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MagnifyingGlass } from "react-loader-spinner";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { BiGitBranch, BiCodeBlock } from "react-icons/bi";
+import { BiGitBranch, BiCodeBlock, BiHelpCircle } from "react-icons/bi";
 
 import Form from "../styles/Form";
 import projects from "../data/projectsData";
 import { checkOneToMany } from "../services/api";
 import { ResultContext } from "../hooks/ResultContext";
+import { oneToManySchema } from "../schema/formSchema";
 
 // ToDo: Criar camada para os tipos
 
@@ -33,6 +34,15 @@ export default function FormOneToMany({
   const submitForm: SubmitHandler<FieldValues> = async (data) => {
     try {
       setIsSubmitting(true);
+
+      await oneToManySchema.validate(data, { abortEarly: true });
+
+      if (
+        data.basefile.length > 0 &&
+        data.basefile[0].type !== "application/x-zip-compressed"
+      ) {
+        throw new ValidationError("O arquivo deve ser um zip");
+      }
 
       const response = await checkOneToMany(data);
 
@@ -76,7 +86,7 @@ export default function FormOneToMany({
             {...register("project")}
             active={watch("project") ? true : false}
           >
-            <option>Selecione um projeto</option>
+            <option value="">Selecione um projeto</option>
             {projects.map((project) => (
               <option key={project} value={project}>
                 {project}
@@ -87,16 +97,25 @@ export default function FormOneToMany({
             <BiCodeBlock />
           </Form.LabelIcon>
         </Form.Group>
-        <Form.Group style={{padding: 0}}>
-          {/* <Form.LabelFile
+        <Form.Group>
+          <Form.LabelFile
             htmlFor="basefile"
             labelText={
               fileName && fileName.length !== 0
                 ? fileName[0].name
                 : "Nenhum arquivo selecionado"
             }
-          /> */}
-          <input type="hidden" id="basefile" {...register("basefile")} />
+          />
+          <input type="file" id="basefile" {...register("basefile")} />
+          <Form.Info>
+            <Form.WrapperToolTip>
+              <Form.ToolTip left="-46px" backgroundOpacity={false}>
+                Selecione um arquivo base para os projetos enviados!
+                Desabilitada no momento.
+              </Form.ToolTip>
+              <BiHelpCircle />
+            </Form.WrapperToolTip>
+          </Form.Info>
         </Form.Group>
         <Form.Group>
           <Form.Submit type="submit" disabled={isSubmitting}>

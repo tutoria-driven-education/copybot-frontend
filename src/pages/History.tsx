@@ -1,7 +1,25 @@
+import { useCallback, useEffect, useState } from "react";
 import { BiLinkExternal, BiShow } from "react-icons/bi";
+import { getHistoric } from "../services/api";
 import Table from "../styles/Table";
 
 export default function History() {
+  const [historic, setHistoric] = useState([]);
+
+  console.log(historic);
+
+  const loadHistoric = useCallback(async () => {
+    try {
+      const response = await getHistoric();
+
+      setHistoric(response.data);
+    } catch (error) {}
+  }, []);
+
+  useEffect(() => {
+    loadHistoric();
+  }, [loadHistoric]);
+
   return (
     <>
       <Table.Container>
@@ -17,7 +35,7 @@ export default function History() {
             </Table.Row>
           </Table.Head>
           <Table.Body>
-            <Table.Row>
+            {/* <Table.Row>
               <Table.Cell>Isabelly</Table.Cell>
               <Table.Cell>Cineflex</Table.Cell>
               <Table.Cell>
@@ -64,7 +82,7 @@ export default function History() {
               <Table.Cell>
                 <BiShow />
               </Table.Cell>
-            </Table.Row>
+            </Table.Row> */}
           </Table.Body>
         </Table.Horizontal>
       </Table.Container>
