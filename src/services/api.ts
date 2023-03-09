@@ -3,7 +3,7 @@ import axios from "axios";
 //https://plagiarism-checker-bot-v2.sistemas.driven.com.br
 
 const api = axios.create({
-  baseURL: "https://plagiarism-checker-bot-v2.sistemas.driven.com.br",
+  baseURL: "http://localhost:5000",
 });
 
 type CheckOneToOne = {

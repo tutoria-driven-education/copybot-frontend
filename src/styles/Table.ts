@@ -2,28 +2,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   width: 100%;
-  margin: 0 auto;
-  padding-top: 90px;
-
-  @media screen and (min-width: 768px) {
-    width: 720px;
-  }
-
-  @media screen and (min-width: 992px) {
-    width: 960px;
-  }
-
-  @media screen and (min-width: 1200px) {
-    width: 1140px;
-  }
-
-  @media screen and (min-width: 1400px) {
-    width: 1320px;
-  }
-
-  @media screen and (min-width: 1600px) {
-    width: 1500px;
-  }
+  padding: 90px 32px 0px 32px;
 `;
 
 const Horizontal = styled.table`
@@ -42,7 +21,7 @@ const HeaderCell = styled.th`
 const Body = styled.tbody``;
 
 const Row = styled.tr`
-  background-color: #45455c;
+  background-color: #333348;
 `;
 
 const Cell = styled.td`
@@ -58,4 +37,28 @@ const Cell = styled.td`
   }
 `;
 
-export default { Container, Horizontal, Head, Body, Row, Cell, HeaderCell };
+const Show = styled.button`
+  border: none;
+  color: #ffffff;
+  background-color: transparent;
+
+  svg {
+    font-size: 1.6rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: #cccccc;
+  }
+`;
+
+export default {
+  Container,
+  Horizontal,
+  Head,
+  Body,
+  Row,
+  Cell,
+  HeaderCell,
+  Show,
+};

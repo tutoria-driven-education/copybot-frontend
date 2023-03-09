@@ -1,26 +1,66 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { BiLinkExternal, BiShow } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import { ResultContext } from "../hooks/ResultContext";
 import { getHistoric } from "../services/api";
 import Table from "../styles/Table";
 
+type ResultType = {
+  table: string;
+  similarity: number;
+  columnLeft: string;
+  columnRight: string;
+};
+
+type Historic = {
+  studentNameOne: string;
+  studentNameTwo: string;
+  project: string;
+  projectDelivered: string;
+  projectSource: string;
+  warning: boolean;
+  Result: ResultType[];
+};
+
 export default function History() {
-  const [historic, setHistoric] = useState([]);
-  
+  const navigate = useNavigate();
+
+  const { setResult } = useContext(ResultContext);
+  const [historic, setHistoric] = useState<Historic[]>();
+
   const loadHistoric = useCallback(async () => {
     try {
       const response = await getHistoric();
 
       setHistoric(response.data);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   useEffect(() => {
     loadHistoric();
   }, [loadHistoric]);
 
+  const openResultPage = (historic: Historic) => {
+    const newHistoric = {
+      type: "one-to-one",
+      table: historic.Result[0].table,
+      columns: [historic.Result[0].columnLeft, historic.Result[0].columnRight],
+      studentNameOne: historic.studentNameOne,
+      studentNameTwo: historic.studentNameTwo,
+    };
+
+    setResult(newHistoric);
+
+    localStorage.setItem("result", JSON.stringify(newHistoric));
+
+    navigate("/result");
+  };
+
   return (
     <>
-      <Table.Container>
+      <Table.Container className="aqui">
         <Table.Horizontal>
           <Table.Head>
             <Table.Row>
@@ -33,54 +73,28 @@ export default function History() {
             </Table.Row>
           </Table.Head>
           <Table.Body>
-            {/* <Table.Row>
-              <Table.Cell>Isabelly</Table.Cell>
-              <Table.Cell>Cineflex</Table.Cell>
-              <Table.Cell>
-                <a
-                  href="https://github.com/IsabellyWilhelm/cineflex-react.git"
-                  target="_blank"
-                >
-                  https://github.com/IsabellyWilhelm/cineflex-react.git <BiLinkExternal />
-                </a>
-              </Table.Cell>
-              <Table.Cell>
-                <a
-                  href="https://github.com/ruineto-dev/cineflex"
-                  target="_blank"
-                >
-                  https://github.com/ruineto-dev/cineflex <BiLinkExternal />
-                </a>
-              </Table.Cell>
-              <Table.Cell>99%</Table.Cell>
-              <Table.Cell>
-                <BiShow />
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>Larissa Ribeiro Abreu da Silva</Table.Cell>
-              <Table.Cell>Cineflex</Table.Cell>
-              <Table.Cell>
-                <a
-                  href="https://github.com/larissaribeiro01/projeto9-cineflex"
-                  target="_blank"
-                >
-                  https://github.com/larissaribeiro01/projeto9-cineflex <BiLinkExternal />
-                </a>
-              </Table.Cell>
-              <Table.Cell>
-                <a
-                  href="https://github.com/snowslaura/projeto9-cineflex"
-                  target="_blank"
-                >
-                  https://github.com/snowslaura/projeto9-cineflex <BiLinkExternal />
-                </a>
-              </Table.Cell>
-              <Table.Cell>99%</Table.Cell>
-              <Table.Cell>
-                <BiShow />
-              </Table.Cell>
-            </Table.Row> */}
+            {historic?.map((historic: Historic, index: number) => (
+              <Table.Row key={index}>
+                <Table.Cell>{historic.studentNameOne}</Table.Cell>
+                <Table.Cell>{historic.project}</Table.Cell>
+                <Table.Cell>
+                  <a href={historic.projectDelivered} target="_blank">
+                    {historic.projectDelivered} <BiLinkExternal />
+                  </a>
+                </Table.Cell>
+                <Table.Cell>
+                  <a href={historic.projectSource} target="_blank">
+                    {historic.projectSource} <BiLinkExternal />
+                  </a>
+                </Table.Cell>
+                <Table.Cell>{historic.Result[0].similarity}%</Table.Cell>
+                <Table.Cell>
+                  <Table.Show onClick={() => openResultPage(historic)}>
+                    <BiShow />
+                  </Table.Show>
+                </Table.Cell>
+              </Table.Row>
+            ))}
           </Table.Body>
         </Table.Horizontal>
       </Table.Container>
